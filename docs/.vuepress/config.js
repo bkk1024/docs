@@ -1,17 +1,24 @@
 import { defineUserConfig, defaultTheme } from 'vuepress'
-
 export default defineUserConfig({
+  // 这是后续将文档部署到 github 的免费服务器上是的路径，一般就填写项目的名称，如我这个项目的名称就叫 docs
   base: '/docs/',
+  // 语言
   lang: 'zh-CN',
+  // 网站title
   title: '二师弟的学习笔记',
+  // 描述
   description: '二师弟的学习笔记',
+  // 这是往 index.html 文件的头部添加的内容，我这里添加了网站的图标，也就是存放在 public 中的 icon 图片
   head: [
     [
-      'link', { rel: 'icon', href: '/icon.png' }
+      'link', { rel: 'icon', href: '/docs/icon.png' }
     ]
   ],
+  // 这里使用的是官方默认主题
   theme: defaultTheme({
+    // 这是侧边栏标题的图标
     logo: '/icon.png',
+    // 顶部导航栏
     navbar: [
       {
         text: '首页',
@@ -122,6 +129,10 @@ export default defineUserConfig({
               {
                 text: 'electron桌面应用',
                 link: '/vue3/vue3-vite-electron.md'
+              },
+              {
+                text: 'VuePress',
+                link: '/vue3/vuepress.md'
               }
             ]
           }
@@ -138,8 +149,13 @@ export default defineUserConfig({
       {
         text: '其他',
         link: '/others/项目笔记.md'
+      },
+      {
+        text: 'GitHub',
+        link: 'https://github.com/bkk1024/docs'
       }
     ],
+    // 侧边栏
     sidebar: {
       '/js/': [
         {
@@ -198,7 +214,7 @@ export default defineUserConfig({
         {
           text: '其他',
           collapsible: true,
-          children: ['axios', 'vue3-vite-electron']
+          children: ['axios', 'vue3-vite-electron', 'vuepress']
         }
       ],
       '/leetcode/': [
@@ -223,6 +239,7 @@ export default defineUserConfig({
         }
       ]
     },
+    // 侧边栏展示的层级深度
     sidebarDepth: 4
   })
 })
