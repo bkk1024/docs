@@ -592,7 +592,7 @@ export default defineConfig({
 
 因为 vite 打包是基于`rollup`的，因此我们可以使用`rollup-plugin-visualizer`插件来生成打包后的内容大小。如图：
 
-![image-20230225220900276](../../../../桌面项目文件/my-project/learning-notes/vue3/vue3视频学习笔记.assets/image-20230225220900276.png)
+![image-20230225220900276](../vue3/vue3%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.assets/image-20230225220900276.png)
 
 1. 下载依赖
 
