@@ -218,7 +218,7 @@ app.whenReady().then(createWindow)
 
 3. 修改`package.json`配置
 
-   <img src="electron - vite.assets/image-20230227235000910.png" alt="image-20230227235000910" style="zoom:50%;" />
+   <img src="./electron-vite.assets/image-20230227235000910.png" alt="image-20230227235000910" style="zoom:50%;" />
 
 4. 在`electron/index.ts`中添加一行代码：
 
