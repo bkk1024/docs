@@ -1,4 +1,6 @@
 import { defineUserConfig, defaultTheme } from 'vuepress'
+import { hopeTheme } from "vuepress-theme-hope"
+
 export default defineUserConfig({
   // 这是后续将文档部署到 github 的免费服务器上是的路径，一般就填写项目的名称，如我这个项目的名称就叫 docs
   base: '/docs/',
@@ -15,7 +17,7 @@ export default defineUserConfig({
     ]
   ],
   // 这里使用的是官方默认主题
-  theme: defaultTheme({
+  theme: hopeTheme({
     // 这是侧边栏标题的图标
     logo: '/icon.png',
     // 顶部导航栏
@@ -240,6 +242,19 @@ export default defineUserConfig({
       ]
     },
     // 侧边栏展示的层级深度
-    sidebarDepth: 4
+    sidebarDepth: 4,
+    plugins: {
+      // mdEnhance: {
+      //   // 启用 figure
+      //   figure: true,
+      //   // 启用图片懒加载
+      //   imgLazyload: true,
+      //   // 启用图片标记
+      //   imgMark: true,
+      //   // 启用图片大小
+      //   imgSize: true,
+      // },
+      // photoSwipe: true,
+    },
   })
 })

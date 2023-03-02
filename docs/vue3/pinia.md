@@ -30,7 +30,7 @@ app.mount("#app")
 
 pinia 的 store 是使用 `defineStore()` 定义的，并且它需要一个**唯一**的名称，作为第一个参数传递：
 
-```javascript
+```js
 import { defineStore } from 'pinia'
 
 // useStore 可以随便取名
@@ -64,7 +64,7 @@ export const useStore = defineStore('main', {
   <script setup>
   	import { useStore } from "@/stores/counter"
   	import { storeToRefs } from "pinia"
-
+  
   	const store = useStore()
   	const { name, count } = storeToRefs(store)
   	/*
@@ -172,7 +172,7 @@ cartStore.$subscribe((mutation, state) => {
 
 Getter 就是 Store 状态的计算值，可以用 `defineStore()` 中的 `getter` 属性定义。它接收 state 作为第一个参数：
 
-```JavaScript
+```js
 export const useStore = defineStore('main', {
   state: () => ({
     count: 0,
@@ -185,7 +185,7 @@ export const useStore = defineStore('main', {
 
 在某个 getter 中也可以使用其他 getter，我们可以使用 `this` 访问到整个 store 的实例：
 
-```JavaScript
+```js
 export const useStore = defineStore('main', {
   state: () => ({
     count: 0,
@@ -215,7 +215,7 @@ export const useStore = defineStore('main', {
 
 本质上来说，我们无法向 Getters 传递任何参数，但是，我们可以从 getter 返回一个函数以接收任何参数：
 
-```JavaScript
+```js
 export const useStore = defineStore('main', {
   getters: {
     getUserById: (state) => {
@@ -241,7 +241,7 @@ export const useStore = defineStore('main', {
 
 ### 访问其他 Store 的 getter
 
-```JavaScript
+```js
 import { useOtherStore } from './other-store'
 
 export const useStore = defineStore('main', {
@@ -251,7 +251,7 @@ export const useStore = defineStore('main', {
   		const otherStore = useOtherStore()
 			return state.localData + otherStore.data
 		}
-  }
+  	}
 })
 ```
 
@@ -259,7 +259,7 @@ export const useStore = defineStore('main', {
 
 使用 `defineStore()` 中的 `actions` 属性定义，用来处理业务逻辑：
 
-```javascript
+```js
 export const useStore = defineStore("main", {
 	state: () => ({
 		count: 0,

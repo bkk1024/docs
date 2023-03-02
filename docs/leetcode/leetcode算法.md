@@ -10,7 +10,7 @@
 
 [链接](https://leetcode.cn/problems/two-sum)
 
-```javascript
+```js
 // 解法一：双重循环
 const twoSum = function (nums, target) {
 	for (let i = 0; i < nums.length; i++) {
@@ -47,7 +47,7 @@ const twoSum = function (nums, target) {
 
 [链接](https://leetcode.cn/problems/merge-two-sorted-lists/)
 
-```javascript
+```js
 const mergeTwoLists = function (list1, list2) {
 	const prehead = new ListNode(-1)
 	let prev = prehead
@@ -91,7 +91,7 @@ const mergeTwoLists = function (list1, list2) {
 
 [链接](https://leetcode.cn/problems/add-two-numbers)
 
-```JavaScript
+```js
 const addTwoNumbers = function(l1, l2) {
   let sum = new ListNode('0') // 结果链表
   let shiwei = 0
@@ -124,7 +124,7 @@ Y I R
 
 [链接](https://leetcode.cn/problems/zigzag-conversion)
 
-```JavaScript
+```js
 const convert = function (s, numRows) {
   // 当只能写出一列时
   if (s.length <= numRows || numRows <= 1) return s
@@ -159,7 +159,7 @@ const convert = function (s, numRows) {
 
 [链接](https://leetcode.cn/problems/container-with-most-water)
 
-```JavaScript
+```js
 // 双指针解法
 const maxArea = function (height) {
   let max = 0
@@ -190,7 +190,7 @@ const maxArea = function (height) {
 
 [链接](https://leetcode.cn/problems/3sum/)
 
-```JavaScript
+```js
 // 双指针解法
 const threeSum = function (nums) {
   // 最左侧值为定值，右侧所有值进行两边推进计算
@@ -246,7 +246,7 @@ const threeSum = function (nums) {
 
 [链接](https://leetcode.cn/problems/remove-nth-node-from-end-of-list/)
 
-```JavaScript
+```js
 const removeNthFromEnd = function (head, n) {
   let left = head // 左边的指针
   let right = head // 右边的指针
@@ -281,7 +281,7 @@ const removeNthFromEnd = function (head, n) {
 
 [链接](https://leetcode.cn/problems/valid-parentheses/)
 
-```JavaScript
+```js
 // 深度递归
 const generateParenthesis = function (n) {
   let result = []
@@ -318,7 +318,7 @@ const generateParenthesis = function (n) {
 
 [链接](https://leetcode.cn/problems/regular-expression-matching/)
 
-```JavaScript
+```js
 // 动态规划
 const isMatch = function (s, p) {
   if (s == null || p == null) return false

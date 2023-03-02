@@ -28,7 +28,7 @@
 
 3. 在 route 的 `index.js` 文件中做全局路由守卫
 
-   ```JavaScript
+   ```js
    router.beforeEach((to, from, next) => {
      if (to.name == 'login' && localStorage.getItem('token')) {
        next({name: 'home'})
@@ -58,9 +58,9 @@
 
    - 解决办法：在后端接口文件的 `app.js` 中添加以下代码：
 
-     ```JavaScript
+     ```js
      const app = express()
-
+     
      app.all('*', (req, res, next) => {
        res.header('Access-Control-Allow-Origin', '*')
        res.header('Access-Control-Allow-Headers', 'Authorization, Content-Type, Content-Length, Accept, X-Requested-With, sessionToken')
@@ -111,7 +111,7 @@
 
 4. 在 `main.js` 文件中全局注册
 
-   ```JavaScript
+   ```js
    import { createApp } from 'vue'
    import App from './App.vue'
    ... // 导入组件、样式等

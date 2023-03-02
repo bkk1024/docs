@@ -214,4 +214,30 @@ jobs:
 
 4. 在`md`文件中书写时，尽量不要书写没有闭合的标签元素，可能会导致报错。
 
+
+## vuepress-theme-hope
+
+这个文档我换了一个主题`vuepress-theme-hope`，但是这个**侧边栏**似乎有点问题，如下：
+
+1. <span style="color: red">自动将字母转换为大写</span>
+
+   ![image-20230302235414699](./vuepress.assets/image-20230302235414699.png)
+
+   配置如下：
+
+   ![image-20230302235527856](./vuepress.assets/image-20230302235527856.png)
+
+2. <span style="color: red">自动添加路径前缀</span>
+
+   ![image-20230302235646953](./vuepress.assets/image-20230302235646953.png)
+
+   ![image-20230302235753921](./vuepress.assets/image-20230302235753921.png)
+
+   配置如下
+
+   ![image-20230302235818950](./vuepress.assets/image-20230302235818950.png)
+
+   ![image-20230302235838983](./vuepress.assets/image-20230302235838983.png)
+
    
+
