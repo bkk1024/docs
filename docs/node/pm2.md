@@ -14,7 +14,7 @@ pm2 start index.js
 
 启动成功会看到如下信息
 
-![image-20230228170620255](pm2.assets/image-20230228170620255.png)
+![image-20230228170620255](./pm2.assets/image-20230228170620255.png)
 
 ### 停止
 
