@@ -1,3 +1,5 @@
+# leetcode 算法
+
 ## 简单
 
 ### 两数之和
@@ -92,21 +94,21 @@ const mergeTwoLists = function (list1, list2) {
 [链接](https://leetcode.cn/problems/add-two-numbers)
 
 ```js
-const addTwoNumbers = function(l1, l2) {
-  let sum = new ListNode('0') // 结果链表
-  let shiwei = 0
-  let result = sum
-  while (shiwei || l1 || l2) {
-    let myL1 = l1 ? l1.val : 0
-    let myL2 = l2 ? l2.val : 0
-    let res = myL1 + myL2 + shiwei // 三个数相加的最大值为 9 + 9 + 1 = 19
-    shiwei = res >= 10 ? 1 : 0 // 判断是否需要进 1
-    sum.next = new ListNode(res % 10) // 保留相加后的结果的个位数
-    sum = sum.next // 指针指向下一位
-    l1 = l1 ? l1.next : null // 指针指向下一位
-    l2 = l2 ? l2.next : null // 指针指向下一位
-  }
-  return result.next
+const addTwoNumbers = function (l1, l2) {
+	let sum = new ListNode("0") // 结果链表
+	let shiwei = 0
+	let result = sum
+	while (shiwei || l1 || l2) {
+		let myL1 = l1 ? l1.val : 0
+		let myL2 = l2 ? l2.val : 0
+		let res = myL1 + myL2 + shiwei // 三个数相加的最大值为 9 + 9 + 1 = 19
+		shiwei = res >= 10 ? 1 : 0 // 判断是否需要进 1
+		sum.next = new ListNode(res % 10) // 保留相加后的结果的个位数
+		sum = sum.next // 指针指向下一位
+		l1 = l1 ? l1.next : null // 指针指向下一位
+		l2 = l2 ? l2.next : null // 指针指向下一位
+	}
+	return result.next
 }
 ```
 
@@ -126,22 +128,22 @@ Y I R
 
 ```js
 const convert = function (s, numRows) {
-  // 当只能写出一列时
-  if (s.length <= numRows || numRows <= 1) return s
-  // 当能写出多列时
-  let arr = new Array(numRows).fill('') // 先初始化数组
-  let loop = 2 * (numRows - 1) // 计算每几个字符一个循环
-  for (let i = 0; i < s.length; i++) {
-    const rem = i % loop
-    if (rem < numRows) {
-      // 这里将z字的上边存入
-      arr[rem] += s[i]
-    } else {
-      // 这里将z字的斜边存入
-      arr[loop - rem] += s[i]
-    }
-  }
-  return arr.join('')
+	// 当只能写出一列时
+	if (s.length <= numRows || numRows <= 1) return s
+	// 当能写出多列时
+	let arr = new Array(numRows).fill("") // 先初始化数组
+	let loop = 2 * (numRows - 1) // 计算每几个字符一个循环
+	for (let i = 0; i < s.length; i++) {
+		const rem = i % loop
+		if (rem < numRows) {
+			// 这里将z字的上边存入
+			arr[rem] += s[i]
+		} else {
+			// 这里将z字的斜边存入
+			arr[loop - rem] += s[i]
+		}
+	}
+	return arr.join("")
 }
 ```
 
@@ -162,19 +164,19 @@ const convert = function (s, numRows) {
 ```js
 // 双指针解法
 const maxArea = function (height) {
-  let max = 0
-  let left = 0
-  let right = height.length - 1
-  while (left != right) {
-    let area = Math.min(height[left], height[right]) * (right - left)
-    max = max > area ? max : area
-    if (height[left] <= height[right]) {
-      left = left + 1
-    } else {
-      right = right - 1
-    }
-  }
-  return max
+	let max = 0
+	let left = 0
+	let right = height.length - 1
+	while (left != right) {
+		let area = Math.min(height[left], height[right]) * (right - left)
+		max = max > area ? max : area
+		if (height[left] <= height[right]) {
+			left = left + 1
+		} else {
+			right = right - 1
+		}
+	}
+	return max
 }
 ```
 
@@ -193,36 +195,36 @@ const maxArea = function (height) {
 ```js
 // 双指针解法
 const threeSum = function (nums) {
-  // 最左侧值为定值，右侧所有值进行两边推进计算
-  let res = []
-  nums.sort((a, b) => a - b)
-  let size = nums.length
-  if (nums[0] <= 0 && nums[size - 1] >= 0) {
-    // 保证数组中同时存在正数和负数
-    let i = 0
-    while (i < size - 2) {
-      if (nums[i] > 0) break // 最左侧大于0，无解
-      let first = i + 1 // 头指针
-      let last = size - 1 // 尾指针
-      while (first < last) {
-        if (nums[i] * nums[last] > 0) break // 三数同符号，无解
-        let sum = nums[i] + nums[first] + nums[last]
-        if (sum === 0) {
-          res.push([nums[i], nums[first], nums[last]])
-        }
-        if (sum <= 0) {
-          // 负数过小，first右移
-          while (nums[first] === nums[++first]) { } // 重复值跳过
-        } else {
-          // 和大于0，last左移
-          while (nums[last] === nums[--last]) { } // 重复值跳过
-        }
-      }
-      while (nums[i] === nums[++i]) { } // 重复定值跳过
-    }
-  }
+	// 最左侧值为定值，右侧所有值进行两边推进计算
+	let res = []
+	nums.sort((a, b) => a - b)
+	let size = nums.length
+	if (nums[0] <= 0 && nums[size - 1] >= 0) {
+		// 保证数组中同时存在正数和负数
+		let i = 0
+		while (i < size - 2) {
+			if (nums[i] > 0) break // 最左侧大于0，无解
+			let first = i + 1 // 头指针
+			let last = size - 1 // 尾指针
+			while (first < last) {
+				if (nums[i] * nums[last] > 0) break // 三数同符号，无解
+				let sum = nums[i] + nums[first] + nums[last]
+				if (sum === 0) {
+					res.push([nums[i], nums[first], nums[last]])
+				}
+				if (sum <= 0) {
+					// 负数过小，first右移
+					while (nums[first] === nums[++first]) {} // 重复值跳过
+				} else {
+					// 和大于0，last左移
+					while (nums[last] === nums[--last]) {} // 重复值跳过
+				}
+			}
+			while (nums[i] === nums[++i]) {} // 重复定值跳过
+		}
+	}
 
-  return res
+	return res
 }
 ```
 
@@ -248,22 +250,22 @@ const threeSum = function (nums) {
 
 ```js
 const removeNthFromEnd = function (head, n) {
-  let left = head // 左边的指针
-  let right = head // 右边的指针
-  // 让右指针走在左指针的前面n个
-  while (n) {
-    right = right.next
-    n--
-  }
-  if (!right) return head.next // 左指针指向头节点，
-  // 当右指针指向尾节点时，左指针指向的节点的下一个节点就是要删除的
-  while (right.next) {
-    left = left.next
-    right = right.next
-  }
-  left.next = left.next.next // 删除左指针的下一个节点
+	let left = head // 左边的指针
+	let right = head // 右边的指针
+	// 让右指针走在左指针的前面n个
+	while (n) {
+		right = right.next
+		n--
+	}
+	if (!right) return head.next // 左指针指向头节点，
+	// 当右指针指向尾节点时，左指针指向的节点的下一个节点就是要删除的
+	while (right.next) {
+		left = left.next
+		right = right.next
+	}
+	left.next = left.next.next // 删除左指针的下一个节点
 
-  return head
+	return head
 }
 ```
 
@@ -284,24 +286,24 @@ const removeNthFromEnd = function (head, n) {
 ```js
 // 深度递归
 const generateParenthesis = function (n) {
-  let result = []
+	let result = []
 
-  const dfs = (leftNum, rightNum, str) => {
-    /* 深度递归：
+	const dfs = (leftNum, rightNum, str) => {
+		/* 深度递归：
       当左括号未达到最大数时，添加左括号；
       当左括号数量大于右括号数量时，添加右括号
       当字符串长度为2n时，将字符串压入数组，退出递归
     */
-    if (str.length == 2 * n) {
-      result.push(str)
-      return
-    }
-    if (leftNum > 0) dfs(leftNum - 1, rightNum, str + '(')
-    if (leftNum < rightNum) dfs(leftNum, rightNum - 1, str + ')')
-  }
+		if (str.length == 2 * n) {
+			result.push(str)
+			return
+		}
+		if (leftNum > 0) dfs(leftNum - 1, rightNum, str + "(")
+		if (leftNum < rightNum) dfs(leftNum, rightNum - 1, str + ")")
+	}
 
-  dfs(n, n, '')
-  return result
+	dfs(n, n, "")
+	return result
 }
 ```
 
@@ -321,38 +323,38 @@ const generateParenthesis = function (n) {
 ```js
 // 动态规划
 const isMatch = function (s, p) {
-  if (s == null || p == null) return false
+	if (s == null || p == null) return false
 
-  const sLen = s.length,
-    pLen = p.length
+	const sLen = s.length,
+		pLen = p.length
 
-  // 初始化 dp 表格
-  const dp = new Array(sLen + 1) // 初始化一维数组
-  for (let i = 0; i < dp.length; i++) {
-    dp[i] = new Array(pLen + 1).fill(false) // 将项默认为false，初始化二维数组
-  }
+	// 初始化 dp 表格
+	const dp = new Array(sLen + 1) // 初始化一维数组
+	for (let i = 0; i < dp.length; i++) {
+		dp[i] = new Array(pLen + 1).fill(false) // 将项默认为false，初始化二维数组
+	}
 
-  dp[0][0] = true
-  // base case
-  // s为空，p不为空，由于*可以匹配0个字符，所以有可能为true
-  for (let i = 1; i < pLen + 1; i++) {
-    if (p[i - 1] == "*") dp[0][i] = dp[0][i - 2]
-  }
-  // 迭代
-  for (let i = 1; i < sLen + 1; i++) {
-    for (let j = 1; j < pLen + 1; j++) {
-      if (s[i - 1] == p[j - 1] || p[j - 1] == ".") {
-        dp[i][j] = dp[i - 1][j - 1]
-      } else if (p[j - 1] == "*") {
-        if (s[i - 1] == p[j - 2] || p[j - 2] == ".") {
-          dp[i][j] = dp[i][j - 2] || dp[i - 1][j - 2] || dp[i - 1][j] // * 匹配0个或多个
-        } else {
-          dp[i][j] = dp[i][j - 2] // * 匹配0个
-        }
-      }
-    }
-  }
-  return dp[sLen][pLen] // 长sLen的s串 是否匹配 长pLen的p串
+	dp[0][0] = true
+	// base case
+	// s为空，p不为空，由于*可以匹配0个字符，所以有可能为true
+	for (let i = 1; i < pLen + 1; i++) {
+		if (p[i - 1] == "*") dp[0][i] = dp[0][i - 2]
+	}
+	// 迭代
+	for (let i = 1; i < sLen + 1; i++) {
+		for (let j = 1; j < pLen + 1; j++) {
+			if (s[i - 1] == p[j - 1] || p[j - 1] == ".") {
+				dp[i][j] = dp[i - 1][j - 1]
+			} else if (p[j - 1] == "*") {
+				if (s[i - 1] == p[j - 2] || p[j - 2] == ".") {
+					dp[i][j] = dp[i][j - 2] || dp[i - 1][j - 2] || dp[i - 1][j] // * 匹配0个或多个
+				} else {
+					dp[i][j] = dp[i][j - 2] // * 匹配0个
+				}
+			}
+		}
+	}
+	return dp[sLen][pLen] // 长sLen的s串 是否匹配 长pLen的p串
 }
 ```
 

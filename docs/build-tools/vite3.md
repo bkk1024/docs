@@ -1,3 +1,5 @@
+# vite3
+
 ## 使用 vite 创建一个 vue 项目
 
 - pnpm：`pnpm create vite`

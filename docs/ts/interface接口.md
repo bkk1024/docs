@@ -1,3 +1,5 @@
+# interface 接口
+
 ## interface 定义约束
 
 在 ts 中，可以使用`interface`来定义一个类的结构，它规定了这个类中应该包含哪些属性和方法。同时，接口也可以当成类型声明去使用。接口可以重复定义，同名的接口的结构为所有同名加起来的结构。
@@ -11,7 +13,7 @@ interface Person {
 
 // 重复定义
 interface Person {
-    // say: () => void
+	// say: () => void
 	say: Function
 }
 
@@ -42,7 +44,7 @@ let zhangsan: Person = {
 	name: "zhangsan",
 	age: 18,
 	weight: 80,
-  	height: 180,
+	height: 180,
 }
 ```
 
@@ -112,4 +114,3 @@ class Son implements Person {
 	say: () => string // 可以重写方法，但是不能重写属性
 }
 ```
-

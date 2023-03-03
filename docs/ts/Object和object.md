@@ -1,3 +1,5 @@
+# Object 和 object 和 {}
+
 ## Object
 
 <img src="./Object和object.assets/image-20230301171413459.png" alt="image-20230301171413459" />

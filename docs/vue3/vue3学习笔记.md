@@ -1,3 +1,5 @@
+# vue3 学习笔记
+
 ## 创建项目
 
 1. 使用`pnpm create vite@latest`创建一个使用`vite`构建的`vue3`项目，这里选择语言为`typescript`。

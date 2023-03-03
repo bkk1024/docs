@@ -1,3 +1,5 @@
+# TS 使用 Promise
+
 如果我们不指定返回的类型，ts 是推断不出来`Promsie`返回的是什么类型的，会返回`unkonwn`。
 
 ```ts

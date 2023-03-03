@@ -1,4 +1,4 @@
-import { defineUserConfig, defaultTheme } from 'vuepress'
+import { defineUserConfig } from 'vuepress'
 import { hopeTheme } from "vuepress-theme-hope"
 
 export default defineUserConfig({
@@ -240,21 +240,6 @@ export default defineUserConfig({
           children: ['项目笔记']
         }
       ]
-    },
-    // 侧边栏展示的层级深度
-    sidebarDepth: 4,
-    plugins: {
-      // mdEnhance: {
-      //   // 启用 figure
-      //   figure: true,
-      //   // 启用图片懒加载
-      //   imgLazyload: true,
-      //   // 启用图片标记
-      //   imgMark: true,
-      //   // 启用图片大小
-      //   imgSize: true,
-      // },
-      // photoSwipe: true,
     },
   })
 })

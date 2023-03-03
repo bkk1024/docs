@@ -1,3 +1,5 @@
+# vue3 其他笔记
+
 ## 问题及解决方法
 
 ### 1、路由跳转白屏问题
@@ -30,11 +32,11 @@
 
    ```js
    router.beforeEach((to, from, next) => {
-     if (to.name == 'login' && localStorage.getItem('token')) {
-       next({name: 'home'})
-     } else {
-       next()
-     }
+   	if (to.name == "login" && localStorage.getItem("token")) {
+   		next({ name: "home" })
+   	} else {
+   		next()
+   	}
    })
    ```
 
@@ -60,18 +62,18 @@
 
      ```js
      const app = express()
-     
-     app.all('*', (req, res, next) => {
-       res.header('Access-Control-Allow-Origin', '*')
-       res.header('Access-Control-Allow-Headers', 'Authorization, Content-Type, Content-Length, Accept, X-Requested-With, sessionToken')
-       // 这里的 sessionToken 为自定义的一个请求头
-       res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS') // 这里也可以直接写 * 允许所有
-       // 设置 options 请求快速响应
-       if (req.methd.toLowerCase() === 'options') {
-         res.send(200)
-       } else {
-         next()
-       }
+
+     app.all("*", (req, res, next) => {
+     	res.header("Access-Control-Allow-Origin", "*")
+     	res.header("Access-Control-Allow-Headers", "Authorization, Content-Type, Content-Length, Accept, X-Requested-With, sessionToken")
+     	// 这里的 sessionToken 为自定义的一个请求头
+     	res.header("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS") // 这里也可以直接写 * 允许所有
+     	// 设置 options 请求快速响应
+     	if (req.methd.toLowerCase() === "options") {
+     		res.send(200)
+     	} else {
+     		next()
+     	}
      })
      ```
 

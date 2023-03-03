@@ -1,3 +1,5 @@
+# VuePress
+
 ## 创建项目
 
 1. 在`github`上创建一个项目
@@ -20,14 +22,14 @@
 
    ```json
    {
-       "scripts": {
-           // 官方是这么写的
-       	// "docs:dev": "vuepress dev docs",
-       	// "docs:build": "vuepress build docs"
-           // 我不想敲 docs:
-           "dev": "vuepress dev docs",
-       	"build": "vuepress build docs"
-     	}
+   	"scripts": {
+   		// 官方是这么写的
+   		// "docs:dev": "vuepress dev docs",
+   		// "docs:build": "vuepress build docs"
+   		// 我不想敲 docs:
+   		"dev": "vuepress dev docs",
+   		"build": "vuepress build docs"
+   	}
    }
    ```
 
@@ -51,80 +53,76 @@
 ## 编写配置
 
 ```js
-import { defineUserConfig, defaultTheme } from 'vuepress'
+import { defineUserConfig, defaultTheme } from "vuepress"
 
 export default defineUserConfig({
-  // 这是后续将文档部署到 github 的免费服务器上是的路径，一般就填写项目的名称，如我这个项目的名称就叫 docs
-  base: '/docs/',
-  // 语言
-  lang: 'zh-CN',
-  // 网站title
-  title: '二师弟的学习笔记',
-  // 描述
-  description: '二师弟的学习笔记',
-  // 这是往 index.html 文件的头部添加的内容，我这里添加了网站的图标，也就是存放在 public 中的 icon 图片
-  head: [
-    [
-      'link', { rel: 'icon', href: '/icon.png' }
-    ]
-  ],
-  // 这里使用的是官方默认主题
-  theme: defaultTheme({
-    // 这是侧边栏标题的图标
-    logo: '/icon.png',
-    // 顶部导航栏，这里只展示了部分配置，具体配置可以参考官方内容
-    navbar: [
-      {
-        text: 'JavaScript',
-        link: '/js/js方法.md'
-      },
-      {
-        text: '打包工具',
-        children: [
-          {
-            text: 'vite3',
-            link: '/build-tools/vite3.md'
-          },
-          {
-            text: 'webpack5',
-            link: '/build-tools/webpack5.md'
-          }
-        ]
-      },
-    ],
-    // 侧边栏，这里只展示了部分配置，具体配置可以参考官方内容
-    sidebar: {
-      '/js/': [
-        {
-          text: 'javascript',
-          collapsible: true,
-          children: ['js方法', 'js知识要点', '浏览器渲染原理', '事件循环', '属性描述符',],
-        }
-      ],
-      '/build-tools/': [
-        {
-          text: 'vite',
-          collapsible: true,
-          children: ['vite3']
-        },
-        {
-          text: 'webpack',
-          collapsible: true,
-          children: ['webpack5']
-        },
-      ],
-    },
-    // 侧边栏展示的层级深度
-    sidebarDepth: 4
-  })
+	// 这是后续将文档部署到 github 的免费服务器上是的路径，一般就填写项目的名称，如我这个项目的名称就叫 docs
+	base: "/docs/",
+	// 语言
+	lang: "zh-CN",
+	// 网站title
+	title: "二师弟的学习笔记",
+	// 描述
+	description: "二师弟的学习笔记",
+	// 这是往 index.html 文件的头部添加的内容，我这里添加了网站的图标，也就是存放在 public 中的 icon 图片
+	head: [["link", { rel: "icon", href: "/icon.png" }]],
+	// 这里使用的是官方默认主题
+	theme: defaultTheme({
+		// 这是侧边栏标题的图标
+		logo: "/icon.png",
+		// 顶部导航栏，这里只展示了部分配置，具体配置可以参考官方内容
+		navbar: [
+			{
+				text: "JavaScript",
+				link: "/js/js方法.md",
+			},
+			{
+				text: "打包工具",
+				children: [
+					{
+						text: "vite3",
+						link: "/build-tools/vite3.md",
+					},
+					{
+						text: "webpack5",
+						link: "/build-tools/webpack5.md",
+					},
+				],
+			},
+		],
+		// 侧边栏，这里只展示了部分配置，具体配置可以参考官方内容
+		sidebar: {
+			"/js/": [
+				{
+					text: "javascript",
+					collapsible: true,
+					children: ["js方法", "js知识要点", "浏览器渲染原理", "事件循环", "属性描述符"],
+				},
+			],
+			"/build-tools/": [
+				{
+					text: "vite",
+					collapsible: true,
+					children: ["vite3"],
+				},
+				{
+					text: "webpack",
+					collapsible: true,
+					children: ["webpack5"],
+				},
+			],
+		},
+		// 侧边栏展示的层级深度
+		sidebarDepth: 4,
+	}),
 })
 ```
 
-[narbar | VuePress](https://v2.vuepress.vuejs.org/zh/reference/default-theme/config.html#navbar) 
+[narbar | VuePress](https://v2.vuepress.vuejs.org/zh/reference/default-theme/config.html#navbar)
 
-[sidebar | VuePress](https://v2.vuepress.vuejs.org/zh/reference/default-theme/config.html#sidebar) 
+[sidebar | VuePress](https://v2.vuepress.vuejs.org/zh/reference/default-theme/config.html#sidebar)
 
-[默认主题完整配置 | VuePress](https://v2.vuepress.vuejs.org/zh/reference/default-theme/config.html) 
+[默认主题完整配置 | VuePress](https://v2.vuepress.vuejs.org/zh/reference/default-theme/config.html)
 
 ## 创建工作流文件，这里参考的是官方 github pages 的配置
 
@@ -132,57 +130,57 @@ export default defineUserConfig({
 name: docs
 
 on:
-  # 每当 push 到 main 分支时触发部署
-  push:
-    branches: [main]
-  # 手动触发部署
-  workflow_dispatch:
+ # 每当 push 到 main 分支时触发部署
+ push:
+  branches: [main]
+ # 手动触发部署
+ workflow_dispatch:
 
 jobs:
-  docs:
-    runs-on: ubuntu-latest
+ docs:
+  runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          # “最近更新时间” 等 git 日志相关信息，需要拉取全部提交记录
-          fetch-depth: 0
+  steps:
+   - uses: actions/checkout@v3
+     with:
+      # “最近更新时间” 等 git 日志相关信息，需要拉取全部提交记录
+      fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          # 选择要使用的 pnpm 版本
-          version: 7
-          # 使用 pnpm 安装依赖
-          run_install: true
+   - name: Setup pnpm
+     uses: pnpm/action-setup@v2
+     with:
+      # 选择要使用的 pnpm 版本
+      version: 7
+      # 使用 pnpm 安装依赖
+      run_install: true
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          # 选择要使用的 node 版本
-          node-version: 18
-          # 缓存 pnpm 依赖
-          cache: pnpm
+   - name: Setup Node.js
+     uses: actions/setup-node@v3
+     with:
+      # 选择要使用的 node 版本
+      node-version: 18
+      # 缓存 pnpm 依赖
+      cache: pnpm
 
-      # 运行构建脚本
-      - name: Build VuePress site
-        run: pnpm docs:build
+   # 运行构建脚本
+   - name: Build VuePress site
+     run: pnpm docs:build
 
-      # 查看 workflow 的文档来获取更多信息
-      # @see https://github.com/crazy-max/ghaction-github-pages
-      - name: Deploy to GitHub Pages
-        uses: crazy-max/ghaction-github-pages@v2
-        with:
-          # 部署到 gh-pages 分支
-          target_branch: gh-pages
-          # 部署目录为 VuePress 的默认输出目录
-          build_dir: docs/.vuepress/dist
-        env:
-          # @see https://docs.github.com/cn/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+   # 查看 workflow 的文档来获取更多信息
+   # @see https://github.com/crazy-max/ghaction-github-pages
+   - name: Deploy to GitHub Pages
+     uses: crazy-max/ghaction-github-pages@v2
+     with:
+      # 部署到 gh-pages 分支
+      target_branch: gh-pages
+      # 部署目录为 VuePress 的默认输出目录
+      build_dir: docs/.vuepress/dist
+     env:
+      # @see https://docs.github.com/cn/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-[完整的部署配置，如果你想部署到别的平台可以参考这里 | VuePress](https://v2.vuepress.vuejs.org/zh/guide/deployment.html) 
+[完整的部署配置，如果你想部署到别的平台可以参考这里 | VuePress](https://v2.vuepress.vuejs.org/zh/guide/deployment.html)
 
 ## 最后就可以上传到 github 中去了
 
@@ -206,14 +204,13 @@ jobs:
 
    这个`./`不要掉了，否则会导致在`github`的`actions`中部署时报错。
 
-3. 如果`actions`中报如下错误：<span style="color: red">The process '/usr/bin/git' failed with exit code **128**</span> 。出现上面的报错是因为***默认情况下，新存储库没有适当的工作流权限。*** 可进行如下操作：
+3. 如果`actions`中报如下错误：<span style="color: red">The process '/usr/bin/git' failed with exit code **128**</span> 。出现上面的报错是因为**_默认情况下，新存储库没有适当的工作流权限。_** 可进行如下操作：
 
    ![image-20230302222402201](./vuepress.assets/image-20230302222402201.png)
 
    ![image-20230302222426208](./vuepress.assets/image-20230302222426208.png)
 
 4. 在`md`文件中书写时，尽量不要书写没有闭合的标签元素，可能会导致报错。
-
 
 ## vuepress-theme-hope
 
@@ -239,5 +236,56 @@ jobs:
 
    ![image-20230302235838983](./vuepress.assets/image-20230302235838983.png)
 
-   
-
+> **上述问题复现：** 
+>
+> - 配置如下：
+>
+>   ```js
+>   import { defineUserConfig } from 'vuepress'
+>   import { hopeTheme } from "vuepress-theme-hope"
+>   
+>   export default defineUserConfig({
+>     base: '/',
+>     theme: hopeTheme({
+>       navbar: [
+>         {
+>           text: 'demo',
+>           link: '/demo/demo1.md',
+>         },
+>       ],
+>       sidebar: {
+>         '/demo/': [
+>           {
+>             text: 'DEMO',
+>             collapsible: true,
+>             children: ['demo1', 'demo2', 'demo3',],
+>           }
+>         ]
+>       },
+>     })
+>   })
+>   ```
+>
+> 当`md`文件中有一级标题，不会出现路径前缀问题
+>
+> ```markdown
+> ## demo1.md
+> 
+> # demo1
+> 
+> 这个文件有一级标题，因此在侧边栏中展示为 demo1
+> ```
+>
+> 当`md`文件中没有一级标题，则侧边栏会使用`/路径/children名称`开头
+>
+> ```markdown
+> ## demo2.md
+> 
+> ## demo2
+> 
+> 这个文件以二级标题开头，在侧边栏中展示即为 /demo/demo2
+> ```
+>
+> 从上面能看出这个主题生成文档的侧边栏是以文档中的一级标题为准的，如果没有一级标题，那么就会出现上述问题，*字母大写也是因为我文档中的标题是大写*🤣。
+>
+> 不知道这算不算bug，也许是我书写文档的习惯有问题。
