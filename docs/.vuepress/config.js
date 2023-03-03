@@ -1,5 +1,6 @@
 import { defineUserConfig } from 'vuepress'
 import { hopeTheme } from "vuepress-theme-hope"
+import { mdEnhancePlugin } from "vuepress-plugin-md-enhance"
 
 export default defineUserConfig({
   // 这是后续将文档部署到 github 的免费服务器上是的路径，一般就填写项目的名称，如我这个项目的名称就叫 docs
@@ -16,15 +17,17 @@ export default defineUserConfig({
       'link', { rel: 'icon', href: '/docs/icon.png' }
     ]
   ],
-  // 这里使用的是官方默认主题
+  // 这里使用的是vuepress-theme-hope主题
   theme: hopeTheme({
     // 这是侧边栏标题的图标
     logo: '/icon.png',
+    // iconAssets: "fontawesome",
     // 顶部导航栏
     navbar: [
       {
         text: '首页',
         link: '/readme.md',
+        // icon: 'home',
       },
       {
         text: 'JavaScript',
@@ -135,6 +138,10 @@ export default defineUserConfig({
               {
                 text: 'VuePress',
                 link: '/vue3/vuepress.md'
+              },
+              {
+                text: 'vue3一些自定义指令',
+                link: '/vue3/vue3一些自定义指令.md'
               }
             ]
           }
@@ -216,7 +223,7 @@ export default defineUserConfig({
         {
           text: '其他',
           collapsible: true,
-          children: ['axios', 'vue3-vite-electron', 'vuepress']
+          children: ['axios', 'vue3-vite-electron', 'vuepress', 'vue3一些自定义指令']
         }
       ],
       '/leetcode/': [
@@ -241,5 +248,13 @@ export default defineUserConfig({
         }
       ]
     },
-  })
+  }),
+  plugins: [
+    mdEnhancePlugin({
+      tabs: true, // 开启选项卡
+      container: true, // 开启自定义容器
+      codetabs: true, // 开启代码分组
+      align: true, // 段落对齐方式
+    })
+  ]
 })

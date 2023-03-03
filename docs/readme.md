@@ -1,4 +1,7 @@
-一个正在努力学习的菜鸡boy的博客，谢谢参观。
+::: center
+一个正在努力学习的菜鸡 boy 的博客，谢谢参观。
+:::
 
-<img src="./.vuepress/public/icon.png" style="zoom:200%;margin: auto;"/>
-
+::: center
+![image](./.vuepress/public/icon.png)
+:::

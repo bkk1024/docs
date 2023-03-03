@@ -5,6 +5,7 @@ specifiers:
   '@vuepress/client': 2.0.0-beta.61
   vue: ^3.2.47
   vuepress: 2.0.0-beta.61
+  vuepress-plugin-md-enhance: 2.0.0-beta.186
   vuepress-theme-hope: 2.0.0-beta.186
 
 devDependencies:
@@ -12,7 +13,8 @@ devDependencies:
   '@vuepress/client': registry.npmmirror.com/@vuepress/client/2.0.0-beta.61
   vue: registry.npmmirror.com/vue/3.2.47
   vuepress: registry.npmmirror.com/vuepress/2.0.0-beta.61_zcwlgd45apez724duilctoxt4u
-  vuepress-theme-hope: registry.npmmirror.com/vuepress-theme-hope/2.0.0-beta.186_44bug2q4gvgfsg4b36ccgweufe
+  vuepress-plugin-md-enhance: registry.npmmirror.com/vuepress-plugin-md-enhance/2.0.0-beta.186_44bug2q4gvgfsg4b36ccgweufe
+  vuepress-theme-hope: registry.npmmirror.com/vuepress-theme-hope/2.0.0-beta.186_tj4vztlfn2yyngui6h5fmczrx4
 
 packages:
 
@@ -7188,7 +7190,7 @@ packages:
       - supports-color
     dev: true
 
-  registry.npmmirror.com/vuepress-theme-hope/2.0.0-beta.186_44bug2q4gvgfsg4b36ccgweufe:
+  registry.npmmirror.com/vuepress-theme-hope/2.0.0-beta.186_tj4vztlfn2yyngui6h5fmczrx4:
     resolution: {integrity: sha512-uQu8C8y2d1L7BxYmTH+1ZoalFAJcgnmfb3CEt/CEzpN373R3lRi6RLQvHSejdoSHwLvF/k7m0/dfNSwOH/2Whg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vuepress-theme-hope/-/vuepress-theme-hope-2.0.0-beta.186.tgz}
     id: registry.npmmirror.com/vuepress-theme-hope/2.0.0-beta.186
     name: vuepress-theme-hope
@@ -7198,6 +7200,7 @@ packages:
       '@vuepress/client': 2.0.0-beta.61
       sass-loader: ^13.2.0
       vuepress: 2.0.0-beta.61
+      vuepress-plugin-md-enhance: 2.0.0-beta.186
       vuepress-vite: 2.0.0-beta.61
       vuepress-webpack: 2.0.0-beta.61
     peerDependenciesMeta:
