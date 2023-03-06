@@ -211,6 +211,7 @@ class Person {
 	name: string
 	age: number
 	// 在属性Or方法前使用 static 关键字可以定义类属性(静态属性)，不需要 new 实例就能读取Or使用
+    // static 定义的属性或方法直接通过类本身就可以调用，如 Person.gender
 	static gender: string = "male"
 	// 在属性前使用 readnoly 关键字可以定义一个只读属性，无法对其进行修改
 	readonly height: number = 185
