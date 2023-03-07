@@ -155,10 +155,10 @@ export default defineUserConfig({
         text: '游戏',
         link: '/games/phaser3.md'
       },
-      {
-        text: '其他',
-        link: '/others/项目笔记.md'
-      },
+      // {
+      //   text: '其他',
+      //   link: '/others/项目笔记.md'
+      // },
       {
         text: 'GitHub',
         link: 'https://github.com/bkk1024/docs'
@@ -248,6 +248,12 @@ export default defineUserConfig({
         }
       ]
     },
+    // 加密路由
+    encrypt: {
+      config: {
+        '/others/': ['12878145710514']
+      }
+    }
   }),
   plugins: [
     mdEnhancePlugin({
