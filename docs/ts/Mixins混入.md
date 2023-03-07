@@ -70,10 +70,10 @@ let c = new C()
 c.sayA() // A
 
 /**
- * @function Mixins 帮助函数，实现混入操作
- * @param derivedCtor {any} 要合并生成的新类
- * @param baseCtors {any[]} 进行合并的类的数组
- * @return void
+ * @description: Mixins 帮助函数，实现混入操作
+ * @param {any} derivedCtor
+ * @param {any[]} baseCtors
+ * @return {*}
  */
 function Mixins(derivedCtor: any, baseCtors: any[]) {
 	baseCtors.forEach((baseCtor) => {
