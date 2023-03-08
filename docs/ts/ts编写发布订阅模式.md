@@ -1,5 +1,7 @@
 # 发布订阅
 
+## 完整代码
+
 ```ts
 interface EventFace {
   on: (name: string, callback: Function) => void
