@@ -173,7 +173,7 @@ export default defineUserConfig({
         {
           text: "typescript",
           collapsible: true,
-          children: ["ts基本内容", "DOM和BOM内置对象", "interface接口", "Object和object", "ts使用Promise", "any和void和never.md", "泛型.md", "tsconfig.json配置.md", "namespace命名空间.md", "声明文件d.ts.md", "Mixins混入.md", "Decorator装饰器.md"],
+          children: ["ts基本内容", "DOM和BOM内置对象", "interface接口", "Object和object", "ts使用Promise", "any和void和never.md", "泛型.md", "tsconfig.json配置.md", "namespace命名空间.md", "声明文件d.ts.md", "Mixins混入.md", "Decorator装饰器.md", "reflect-metadata元数据.md"],
         },
       ],
       "/build-tools/": [

@@ -199,4 +199,41 @@ class Http {
 
 ## 元数据存储
 
-需要安装`reflect-metadata`这个库使用。
+需要安装`reflect-metadata`这个库使用。详情见[Reflect Metadata 元数据](./reflect-metadata元数据.md)
+
+示例如下：
+
+```ts
+const Get = (url: string) => {
+  const fn: MethodDecorator = (target, key, descriptor: TypedPropertyDescriptor<any>) => {
+    axios.get(url).then(res => {
+      const metadata = Reflect.getMetadata(key, target)
+      console.log(metadata);
+      descriptor.value(metadata ? res.data[metadata] : res.data)
+    })
+  }
+  return fn
+}
+
+const Result = (str: string) => {
+  const fn: ParameterDecorator = (target, key, index) => {
+    Reflect.defineMetadata(key, str, target)
+  }
+  return fn
+}
+
+class Http {
+  @Get("https://api.apiopen.top/api/getHaoKanVideo?page=0&size=10")
+  getList(@Result('result') data: any) {
+    console.log(data);
+  }
+}
+```
+
+::: tip
+
+这里的示例演示的是：从接口获取的数据中，解构出我们需要的那个数据的字段名，因为这里接口传递过来的数据存在`data.result.list`中，所以我们直接取到`result`这个字段。
+
+因为装饰器的执行顺序中，参数装饰器 > 方法装饰器，因此我们在`@Result()`中使用`Reflect.defineMetadata()`来传递要解构出来的数据的字段名，然后在`@Get()`中使用`Reflect.getMetadata()`来获取到这个元数据，最后进行解构。
+
+:::
