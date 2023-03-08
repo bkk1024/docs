@@ -33,11 +33,11 @@ export default defineUserConfig({
         children: [
           {
             text: "JavaScript",
-            link: "/js/js方法.md",
+            link: "/js/",
           },
           {
             text: "TypeScript",
-            link: "/ts/ts基本内容.md",
+            link: "/ts/",
           },
         ],
       },
