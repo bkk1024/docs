@@ -14,7 +14,7 @@ export default defineUserConfig({
   // 这是往 index.html 文件的头部添加的内容，我这里添加了网站的图标，也就是存放在 public 中的 icon 图片
   head: [
     ["link", { rel: "icon", href: "/docs/icon.png" }],
-    ["link", { rel: "stylesheet", href: "/docs/font/MapleMono/" }]
+    ["link", { rel: "stylesheet", href: "/docs/font/MapleMono/" }],
   ],
   // 这里使用的是vuepress-theme-hope主题
   theme: hopeTheme({
@@ -29,12 +29,17 @@ export default defineUserConfig({
         // icon: 'home',
       },
       {
-        text: "JavaScript",
-        link: "/js/js方法.md",
-      },
-      {
-        text: "TypeScript",
-        link: "/ts/ts基本内容.md",
+        text: "语言",
+        children: [
+          {
+            text: "JavaScript",
+            link: "/js/js方法.md",
+          },
+          {
+            text: "TypeScript",
+            link: "/ts/ts基本内容.md",
+          },
+        ],
       },
       {
         text: "打包工具",
@@ -158,10 +163,6 @@ export default defineUserConfig({
       //   text: '其他',
       //   link: '/others/项目笔记.md'
       // },
-      {
-        text: "GitHub",
-        link: "https://github.com/bkk1024/docs",
-      },
     ],
     // 侧边栏
     sidebar: {
@@ -181,8 +182,8 @@ export default defineUserConfig({
         {
           text: "typescript相关文件",
           collapsible: true,
-          children: ["tsconfig.json配置.md", "声明文件d.ts.md",]
-        }
+          children: ["tsconfig.json配置.md", "声明文件d.ts.md"],
+        },
       ],
       "/build-tools/": [
         {
@@ -258,6 +259,16 @@ export default defineUserConfig({
         "/others/": ["12878145710514"],
       },
     },
+    // 禁用打印
+    print: false,
+    // 默认为 GitHub. 同时也可以是一个完整的 URL
+    repo: "https://github.com/bkk1024/docs",
+    // 是否显示页面最后更新时间
+    lastUpdated: true,
+    // 是否显示页面贡献者
+    contributors: false,
+    // 是否展示编辑此页链接
+    editLink: false,
   }),
   plugins: [
     mdEnhancePlugin({
