@@ -12,7 +12,10 @@ export default defineUserConfig({
   // 描述
   description: "二师弟的学习笔记",
   // 这是往 index.html 文件的头部添加的内容，我这里添加了网站的图标，也就是存放在 public 中的 icon 图片
-  head: [["link", { rel: "icon", href: "/docs/icon.png" }]],
+  head: [
+    ["link", { rel: "icon", href: "/docs/icon.png" }],
+    ["link", { rel: "stylesheet", href: "/docs/font/MapleMono/" }]
+  ],
   // 这里使用的是vuepress-theme-hope主题
   theme: hopeTheme({
     // 这是侧边栏标题的图标
