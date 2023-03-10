@@ -46,32 +46,32 @@ export default defineUserConfig({
         children: [
           {
             text: "vite3",
-            link: "/build-tools/vite3.md",
+            link: "/build-tools/vite3",
           },
           {
             text: "webpack5",
-            link: "/build-tools/webpack5.md",
+            link: "/build-tools/webpack5",
           },
         ],
       },
       {
         text: "Node",
-        // link: '/node/nodejs.md',
+        // link: '/node/nodejs',
         children: [
           {
             text: "NodeJS",
             children: [
               {
                 text: "nvm",
-                link: "/node/nvm.md",
+                link: "/node/nvm",
               },
               {
                 text: "nodejs",
-                link: "/node/nodejs.md",
+                link: "/node/nodejs",
               },
               {
                 text: "pm2",
-                link: "/node/pm2.md",
+                link: "/node/pm2",
               },
             ],
           },
@@ -80,11 +80,11 @@ export default defineUserConfig({
             children: [
               {
                 text: "nestjs",
-                link: "/node/nestjs8.md",
+                link: "/node/nestjs8",
               },
               {
                 text: "nestjs案例",
-                link: "/node/nestjs博客接口案例.md",
+                link: "/node/nestjs博客接口案例",
               },
             ],
           },
@@ -98,15 +98,15 @@ export default defineUserConfig({
             children: [
               {
                 text: "vue3学习笔记",
-                link: "/vue3/vue3学习笔记.md",
+                link: "/vue3/vue3学习笔记",
               },
               {
                 text: "vue3其他笔记",
-                link: "/vue3/vue3其他笔记.md",
+                link: "/vue3/vue3其他笔记",
               },
               {
                 text: "优化",
-                link: "/vue3/vue常见优化手段.md",
+                link: "/vue3/vue常见优化手段",
               },
             ],
           },
@@ -115,7 +115,7 @@ export default defineUserConfig({
             children: [
               {
                 text: "vue-router",
-                link: "/vue3/vue-router.md",
+                link: "/vue3/vue-router",
               },
             ],
           },
@@ -124,7 +124,7 @@ export default defineUserConfig({
             children: [
               {
                 text: "pinia",
-                link: "/vue3/pinia.md",
+                link: "/vue3/pinia",
               },
             ],
           },
@@ -133,19 +133,19 @@ export default defineUserConfig({
             children: [
               {
                 text: "axios",
-                link: "/vue3/axios.md",
+                link: "/vue3/axios",
               },
               {
                 text: "electron桌面应用",
-                link: "/vue3/vue3-vite-electron.md",
+                link: "/vue3/vue3-vite-electron",
               },
               {
                 text: "VuePress",
-                link: "/vue3/vuepress.md",
+                link: "/vue3/vuepress",
               },
               {
                 text: "vue3一些自定义指令",
-                link: "/vue3/vue3一些自定义指令.md",
+                link: "/vue3/vue3一些自定义指令",
               },
             ],
           },
@@ -153,15 +153,15 @@ export default defineUserConfig({
       },
       {
         text: "LeetCode",
-        link: "/leetcode/leetcode算法.md",
+        link: "/leetcode/leetcode算法",
       },
       {
         text: "游戏",
-        link: "/games/phaser3.md",
+        link: "/games/phaser3",
       },
       // {
       //   text: '其他',
-      //   link: '/others/项目笔记.md'
+      //   link: '/others/项目笔记'
       // },
     ],
     // 侧边栏
@@ -177,12 +177,12 @@ export default defineUserConfig({
         {
           text: "typescript",
           collapsible: true,
-          children: ["ts基本内容", "DOM和BOM内置对象", "interface接口", "Object和object", "ts使用Promise", "any和void和never.md", "泛型.md", "namespace命名空间.md", "Mixins混入.md", "Decorator装饰器.md", "reflect-metadata元数据.md", "ts编写发布订阅模式.md"],
+          children: ["ts基本内容", "DOM和BOM内置对象", "interface接口", "Object和object", "ts使用Promise", "any和void和never", "泛型", "namespace命名空间", "Mixins混入", "Decorator装饰器", "reflect-metadata元数据", "ts编写发布订阅模式", "Proxy和Reflect", "类型兼容"],
         },
         {
           text: "typescript相关文件",
           collapsible: true,
-          children: ["tsconfig.json配置.md", "声明文件d.ts.md"],
+          children: ["tsconfig.json配置", "声明文件d.ts"],
         },
       ],
       "/build-tools/": [
