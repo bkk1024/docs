@@ -20,7 +20,7 @@ export default defineUserConfig({
   theme: hopeTheme({
     // 这是侧边栏标题的图标
     logo: "/icon.png",
-    // iconAssets: "fontawesome",
+    iconAssets: "//at.alicdn.com/t/c/font_3944650_g8izyh3dwek.css",
     // 顶部导航栏
     navbar: [
       {
