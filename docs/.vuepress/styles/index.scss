@@ -146,9 +146,24 @@ $sidebarList:"\e604",
   }
 }
 
-.sidebar-links {}
+// .sidebar-links {}
 
 // 页面信息
 .page-info {
   transform: translateX(1.5rem);
+}
+
+// 返回顶部按钮
+.back-to-top-icon {
+  animation: backtotop 0.8s infinite alternate;
+
+  @keyframes backtotop {
+    from {
+      transform: translateY(0.3rem);
+    }
+
+    to {
+      transform: translateY(-0.3rem);
+    }
+  }
 }
