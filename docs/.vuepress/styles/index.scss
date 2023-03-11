@@ -131,28 +131,22 @@ $sidebarList:"\e604",
 "\e61b",
 "\e61d";
 
-// @function sample($list) {
-//   @return nth($list, random(length($list)));
-// }
-
 // 侧边栏
-// .sidebar-links {
-//   li {
-//     // position: relative;
+.sidebar-heading {
+  &::before {
+    @extend .iconfont;
+    content: "\e613";
+    font-size: 2rem;
+  }
 
-//     a {
-//       // display: flex;
+  &.active::before {
+    @extend .iconfont;
+    content: "\e60b";
+    font-size: 2rem;
+  }
+}
 
-//       &:nth-of-type(n):after {
-//         @extend .iconfont;
-//         // content: "\e604";
-//         content: sample($sidebarList);
-//         float: left;
-//         // position: absolute;
-//       }
-//     }
-//   }
-// }
+.sidebar-links {}
 
 // 页面信息
 .page-info {
