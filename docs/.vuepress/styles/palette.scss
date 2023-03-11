@@ -10,8 +10,52 @@
 // 普通文本上使用的字体
 // $font-family: 'Maple Mono';
 // 代码上使用的字体
-$font-family-code: 'Maple Mono';
+$font-family-code: "Maple Mono";
 // 花哨元素上使用的字体
-$font-family-fancy: 'Maple Mono';
+$font-family-fancy: "Maple Mono";
 // 主题颜色
-$theme-color: #88bfb8;
+$theme-color: #8db799;
+// 背景颜色
+$bg-color: (
+	// light: #f8f7f0,
+	// dark: #31322c,
+	light: #e5dfd5,
+	dark: #1e2732
+);
+
+// 修改颜色
+#app {
+	html[data-theme="light"] & {
+		// 主题色
+		--theme-color: #8db799;
+		// 代码块颜色
+		--code-bg-color: #ebeee8;
+		// 选项卡导航处颜色
+		--tab-nav-bg-color: #f5f2e9;
+
+		// 上一页下一页按钮
+		.page-nav {
+			.prev,
+			.next {
+				transition: all 0.3s linear;
+
+				&:hover {
+					background-color: #f5f2e9;
+				}
+			}
+		}
+	}
+
+	html[data-theme="dark"] & {
+		--theme-color: #88bfb8;
+		--code-bg-color: #151d29;
+
+		// 上一页下一页按钮
+		.page-nav {
+			.prev,
+			.next {
+				transition: all 0.3s linear;
+			}
+		}
+	}
+}
