@@ -177,7 +177,7 @@ export default defineUserConfig({
         {
           text: "typescript",
           collapsible: true,
-          children: ["ts基本内容", "DOM和BOM内置对象", "interface接口", "Object和object", "ts使用Promise", "any和void和never", "泛型", "namespace命名空间", "Mixins混入", "Decorator装饰器", "reflect-metadata元数据", "ts编写发布订阅模式", "Proxy和Reflect", "类型兼容", "Partial、Pick、Record、Readonly"],
+          children: ["ts基本内容", "DOM和BOM内置对象", "interface接口", "Object和object", "ts使用Promise", "any和void和never", "泛型", "namespace命名空间", "Mixins混入", "Decorator装饰器", "reflect-metadata元数据", "ts编写发布订阅模式", "Proxy和Reflect", "类型兼容", "Partial、Pick、Record、Readonly", "infer"],
         },
         {
           text: "typescript相关文件",
