@@ -33,11 +33,25 @@ export default defineUserConfig({
         children: [
           {
             text: "JavaScript",
-            link: "/js/",
+            children: [
+              {
+                text: "js语言用法",
+                link: "/js/js方法"
+              }
+            ]
           },
           {
             text: "TypeScript",
-            link: "/ts/",
+            children: [
+              {
+                text: "ts语言用法",
+                link: "/ts/ts基本内容"
+              },
+              {
+                text: "ts相关文件",
+                link: "/ts/tsconfig.json配置"
+              }
+            ]
           },
         ],
       },
@@ -168,14 +182,14 @@ export default defineUserConfig({
     sidebar: {
       "/js/": [
         {
-          text: "javascript",
+          text: "javascript语言用法",
           collapsible: true,
           children: ["js方法", "js知识要点", "浏览器渲染原理", "事件循环", "属性描述符", "轮询", "WebSocket"],
         },
       ],
       "/ts/": [
         {
-          text: "typescript",
+          text: "typescript语言用法",
           collapsible: true,
           children: ["ts基本内容", "DOM和BOM内置对象", "interface接口", "Object和object", "ts使用Promise", "any和void和never", "泛型", "namespace命名空间", "Mixins混入", "Decorator装饰器", "reflect-metadata元数据", "ts编写发布订阅模式", "Proxy和Reflect", "类型兼容", "Partial、Pick、Record、Readonly", "infer"],
         },
