@@ -118,5 +118,5 @@ type RAT = ReturnArrayType<TTuple> // string | number
 
 这是一个 github 上的 LeetCode TypeScript 的面试题，链接如下：
 
-https://github.com/LeetCode-OpenSource/hire/blob/master/typescript_zh.md
+[LeetCode TypeScript](https://github.com/LeetCode-OpenSource/hire/blob/master/typescript_zh.md) 
 
