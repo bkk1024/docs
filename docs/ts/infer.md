@@ -122,3 +122,72 @@ type RAT = ReturnArrayType<TTuple> // string | number
 
 :::
 
+### 提取头部元素类型
+
+```ts
+type Arr = ["a", "b", "c"]
+
+type GetFirst<T extends any[]> = T extends [infer First, ...any[]] ? First : []
+
+type a = GetFirst<Arr> // "a"
+```
+
+::: tip
+
+`GetFirst`通过`extends`约束`T`只能是数组类型，然后通过`infer`推断数组中第一个元素的类型，其他元素使用扩展运算符(`...`)收集，最后返回。
+
+:::
+
+### 提取尾部元素类型
+
+与头部类型反过来即可。
+
+```ts
+type GetLast<T extends any[]> = T extends [...any[], infer Last] ? Last : []
+```
+
+### 剔除第一个元素
+
+```ts
+type Arr = ["a", "b", "c"]
+
+type GetRest<T extends any[]> = T extends [unknown, ...infer Rest] ? Rest : []
+
+type a = GetRest<Arr> // ["b", "c"]
+```
+
+### 剔除最后一个元素
+
+与剔除第一个反过来即可。
+
+```ts
+type GetRest<T extends any[]> = T extends [...infer Rest, unknown] ? Rest : []
+```
+
+### 反转类型，递归
+
+如我们有一个类型`type Arr = ["a", "b", "c"]`，我们想让它变成`["c", "b", "a"]`。
+
+这样我们就可以使用递归：
+
+```ts
+type Arr = ["a", "b", "c"]
+
+type Reverse<T extends any[]> = T extends [infer First, ...infer Rest] ? [...Reverse<Rest>, First] : []
+
+type ReArr = Reverse<Arr> // ["c", "b", "a"]
+```
+
+:::: tip
+
+使用`extends`约束`T`的类型，然后使用`infer`分别获取第一个元素和剩余其他元素，然后递归调用自己(`Reverse<>`)，并展开所有元素。
+
+在递归调用自己后如果不展开的会得到如下类型：
+
+::: center
+
+![image-20230312173134722](./infer.assets/image-20230312173134722.png)
+
+:::
+
+::::
