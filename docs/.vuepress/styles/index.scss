@@ -168,3 +168,8 @@ $sidebarList: "\e604", "\e60b", "\e60e", "\e613", "\e614", "\e615", "\e616", "\e
 		}
 	}
 }
+
+// 固定 body 背景纹理，不随滚动条滚动
+body {
+	background-attachment: fixed;
+}
