@@ -114,9 +114,11 @@ type TTuple = [string, number]
 type RAT = ReturnArrayType<TTuple> // string | number
 ```
 
-### 拓展题目
+::: tip 拓展题目
 
 这是一个 github 上的 LeetCode TypeScript 的面试题，链接如下：
 
 [LeetCode TypeScript](https://github.com/LeetCode-OpenSource/hire/blob/master/typescript_zh.md) 
+
+:::
 
