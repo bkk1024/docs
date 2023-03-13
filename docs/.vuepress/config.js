@@ -183,7 +183,7 @@ export default defineUserConfig({
         {
           text: "javascript语言用法",
           collapsible: true,
-          children: ["js方法", "js知识要点", "浏览器渲染原理", "事件循环", "属性描述符", "轮询", "WebSocket"],
+          children: ["js方法", "js知识要点", "浏览器渲染原理", "事件循环", "属性描述符", "轮询", "WebSocket", "文件上传"],
         },
       ],
       "/ts/": [
