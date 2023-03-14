@@ -142,7 +142,7 @@ export default defineUserConfig({
             ],
           },
           {
-            text: "Vue.js设计与实现",
+            text: "书籍阅读",
             children: [
               {
                 text: "Vue.js设计与实现",
