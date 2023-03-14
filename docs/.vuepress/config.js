@@ -142,6 +142,15 @@ export default defineUserConfig({
             ],
           },
           {
+            text: "Vue.js设计与实现",
+            children: [
+              {
+                text: "Vue.js设计与实现",
+                link: "/vue3/Vue.js设计与实现/前言",
+              }
+            ]
+          },
+          {
             text: "其他",
             children: [
               {
@@ -226,7 +235,7 @@ export default defineUserConfig({
         {
           text: "Vue3",
           collapsible: true,
-          children: ["vue3学习笔记", "vue3其他笔记", "vue常见优化手段"],
+          children: ["vue3学习笔记", "vue3其他笔记", "vue常见优化手段", "Vue.js设计与实现"],
         },
         {
           text: "VueRouter",
@@ -237,6 +246,20 @@ export default defineUserConfig({
           text: "状态管理",
           collapsible: true,
           children: ["pinia"],
+        },
+        {
+          text: "Vue.js设计与实现",
+          collapsible: true,
+          children: [
+            {
+              text: "前言",
+              link: "Vue.js设计与实现/前言"
+            },
+            {
+              text: "第一篇 框架设计概览",
+              link: "Vue.js设计与实现/第一篇框架设计概览"
+            },
+          ],
         },
         {
           text: "其他",
