@@ -3,42 +3,12 @@
 @import "./body-background.scss";
 
 .dropdown-wrapper .dropdown-item .dropdown-subtitle {
-	font-size: 14px;
+	font-size: 0.9rem;
 	color: #45465e;
 }
 
 .dropdown-subitem {
 	position: relative;
-}
-
-// 修改导航栏样式，添加下拉菜单 hover 和 .active 后的样式
-.navbar {
-	.nav-link {
-		&::before {
-			content: "";
-			position: absolute;
-			bottom: 0;
-			display: block;
-			width: 0;
-			height: 1px;
-			background-color: $theme-color;
-		}
-
-		&:hover::before {
-			width: 100%;
-			transition: all 0.5s ease;
-		}
-
-		&.active::before {
-			content: "";
-			position: absolute;
-			bottom: 0;
-			display: block;
-			width: 100%;
-			height: 1px;
-			background-color: $theme-color;
-		}
-	}
 }
 
 // 修改文章二级标题样式，添加了风车图标
@@ -146,7 +116,6 @@ $sidebarList: "\e604", "\e60b", "\e60e", "\e613", "\e614", "\e615", "\e616", "\e
 // 页面内容
 .theme-container {
 	background: transparent;
-	// backdrop-filter: blur(1.5px);
 }
 
 // 页面信息

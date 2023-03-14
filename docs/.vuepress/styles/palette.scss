@@ -8,15 +8,18 @@ $bg-color: (
 	dark: #1e2732
 );
 
-// 修改颜色
+// 修改颜色，light 和 dark 两套颜色
 #app {
 	html[data-theme="light"] & {
+		$tab-nav-bg-color: #f5f2e9;
+		$main-color: #8db799;
+		$background-color: #e5dfd5;
 		// 主题色
 		--theme-color: #8db799;
 		// 代码块颜色
 		--code-bg-color: #ebeee8;
 		// 选项卡导航处颜色
-		--tab-nav-bg-color: #f5f2e9;
+		--tab-nav-bg-color: $tab-nav-bg-color;
 
 		// 上一页下一页按钮
 		.page-nav {
@@ -25,13 +28,89 @@ $bg-color: (
 				transition: all 0.3s linear;
 
 				&:hover {
-					background-color: #f5f2e9;
+					background-color: $tab-nav-bg-color;
+				}
+			}
+		}
+
+		// 修改导航栏样式，添加下拉菜单 hover 和 .active 后的样式
+		.navbar {
+			.nav-link {
+				&::before {
+					content: "";
+					position: absolute;
+					bottom: 0;
+					display: block;
+					width: 0;
+					height: 0.1rem;
+					background-color: $main-color;
+				}
+
+				&:hover::before {
+					width: 100%;
+					transition: all 0.5s ease;
+				}
+
+				&.active::before {
+					content: "";
+					position: absolute;
+					bottom: 0;
+					display: block;
+					width: 100%;
+					height: 0.1rem;
+					background-color: $main-color;
+				}
+			}
+		}
+
+		// 链接
+		// 外链：a[target=_blank]
+		// 内链：a[class=""]
+		p {
+			a {
+				position: relative;
+
+				&[target="_blank"],
+				&[class=""] {
+					display: inline-block;
+					padding: 0 0.3rem;
+					border-radius: 0.4rem;
+					text-decoration: none !important;
+					transition: all 0.3s linear;
+
+					&::before {
+						content: "";
+						position: absolute;
+						bottom: 0;
+						left: 0;
+						right: 0;
+						margin: 0 auto;
+						width: 100%;
+						height: 0.1rem;
+						background-color: $main-color;
+						transition: all 0.3s linear;
+					}
+
+					&:hover {
+						color: $background-color;
+						background-color: $main-color;
+
+						&::before {
+							// width: 0;
+							opacity: 0;
+							bottom: 100%;
+							// background-color: #fff;
+						}
+					}
 				}
 			}
 		}
 	}
 
 	html[data-theme="dark"] & {
+		// $tab-nav-bg-color: #f5f2e9;
+		$main-color: #88bfb8;
+		$background-color: #1e2732;
 		--theme-color: #88bfb8;
 		--code-bg-color: #151d29;
 
@@ -40,6 +119,80 @@ $bg-color: (
 			.prev,
 			.next {
 				transition: all 0.3s linear;
+			}
+		}
+
+		// 修改导航栏样式，添加下拉菜单 hover 和 .active 后的样式
+		.navbar {
+			.nav-link {
+				&::before {
+					content: "";
+					position: absolute;
+					bottom: 0;
+					display: block;
+					width: 0;
+					height: 0.1rem;
+					background-color: $main-color;
+				}
+
+				&:hover::before {
+					width: 100%;
+					transition: all 0.5s ease;
+				}
+
+				&.active::before {
+					content: "";
+					position: absolute;
+					bottom: 0;
+					display: block;
+					width: 100%;
+					height: 0.1rem;
+					background-color: $main-color;
+				}
+			}
+		}
+
+		// 链接
+		// 外链：a[target=_blank]
+		// 内链：a[class=""]
+		p {
+			a {
+				position: relative;
+
+				&[target="_blank"],
+				&[class=""] {
+					display: inline-block;
+					padding: 0 0.3rem;
+					border-radius: 0.4rem;
+					text-decoration: none !important;
+					// background-color: #fff;
+					transition: all 0.3s linear;
+
+					&::before {
+						content: "";
+						position: absolute;
+						bottom: 0;
+						left: 0;
+						right: 0;
+						margin: 0 auto;
+						width: 100%;
+						height: 0.1rem;
+						background-color: $main-color;
+						transition: all 0.3s linear;
+					}
+
+					&:hover {
+						color: $background-color;
+						background-color: $main-color;
+
+						&::before {
+							// width: 0;
+							opacity: 0;
+							bottom: 100%;
+							// background-color: #fff;
+						}
+					}
+				}
 			}
 		}
 	}
