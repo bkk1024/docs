@@ -147,7 +147,7 @@ export default defineUserConfig({
               {
                 text: "Vue.js设计与实现",
                 link: "/vue3/Vue.js设计与实现/前言",
-              }
+              },
             ]
           },
           {
@@ -258,6 +258,10 @@ export default defineUserConfig({
             {
               text: "第一篇 框架设计概览",
               link: "Vue.js设计与实现/第一篇框架设计概览"
+            },
+            {
+              text: "第二篇 响应系统",
+              link: "Vue.js设计与实现/第二篇响应系统"
             },
           ],
         },

@@ -243,7 +243,7 @@ jobs:
 >   ```js
 >   import { defineUserConfig } from "vuepress"
 >   import { hopeTheme } from "vuepress-theme-hope"
->  
+>    
 >   export default defineUserConfig({
 >   	base: "/",
 >   	theme: hopeTheme({
@@ -301,7 +301,7 @@ jobs:
 @[code{3-10} ts{3-7}:no-line-numbers](../foo.ts)
 ```
 
-这句话的意思是从`../foo.js`文件中导入第`3-10`行的代码，语言为`js`，并且高亮`3-6`行，且代码块不显示行号。
+这句话的意思是从`../foo.ts`文件中导入第`3-10`行的代码，语言为`ts`，并且高亮`3-7`行，且代码块不显示行号。
 :::
 
 ### 文档内部跳转
