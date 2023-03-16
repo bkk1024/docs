@@ -1,6 +1,8 @@
 import { defineUserConfig } from "vuepress"
 import { hopeTheme } from "vuepress-theme-hope"
 import { mdEnhancePlugin } from "vuepress-plugin-md-enhance"
+// 搜索插件
+import { searchProPlugin } from "vuepress-plugin-search-pro"
 
 export default defineUserConfig({
   // 这是后续将文档部署到 github 的免费服务器上是的路径，一般就填写项目的名称，如我这个项目的名称就叫 docs
@@ -342,6 +344,22 @@ export default defineUserConfig({
       container: true, // 开启自定义容器
       codetabs: true, // 开启代码分组
       align: true, // 段落对齐方式
+    }),
+    // 搜索插件配置
+    searchProPlugin({
+      // 索引全部内容
+      indexContent: true,
+      // 为分类和标签添加索引
+      customFields: [
+        {
+          getter: (page) => page.frontmatter.category,
+          formatter: "分类：$content",
+        },
+        {
+          getter: (page) => page.frontmatter.tag,
+          formatter: "标签：$content",
+        },
+      ],
     }),
   ],
 })
