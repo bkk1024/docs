@@ -181,6 +181,10 @@ export default defineUserConfig({
         text: "游戏",
         link: "/games/phaser3",
       },
+      {
+        text: "面试",
+        link: "/interview/readme.md"
+      }
       // {
       //   text: '其他',
       //   link: '/others/项目笔记'
@@ -292,6 +296,28 @@ export default defineUserConfig({
           children: ["项目笔记"],
         },
       ],
+      "/interview/": [
+        {
+          text: "前言",
+          link: "readme.md"
+        },
+        {
+          text: "HTML",
+          link: "html"
+        },
+        {
+          text: "CSS",
+          link: "css"
+        },
+        {
+          text: "JS",
+          link: "js"
+        },
+        {
+          text: "Vue",
+          children: ["vue2", "vue3", "vuex"]
+        }
+      ]
     },
     // 加密路由
     encrypt: {
