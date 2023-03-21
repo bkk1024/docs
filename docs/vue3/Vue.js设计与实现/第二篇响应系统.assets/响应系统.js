@@ -2,7 +2,7 @@
  * @Author: 二师弟
  * @Date: 2023-03-20 19:27:53
  * @LastEditors: 二师弟
- * @LastEditTime: 2023-03-20 19:52:24
+ * @LastEditTime: 2023-03-21 18:10:45
  * @Description: 《Vuejs设计与实现》中响应系统的示例代码
  */
 // 原始数据
@@ -188,13 +188,81 @@ function computed(getter) {
   return obj
 }
 
+// watch方法，观测数据
+function watch(source, cb, options = {}) {
+  // 定义 getter
+  let getter
+  // 如果 source 是函数，则说明用户传递的是 getter 函数
+  if (typeof source === 'function') {
+    getter = source
+  } else {
+    // 否则调用 traverse 方法
+    getter = () => traverse(source)
+  }
 
+  // 定义新值和旧值
+  let oldValue, newValue
+  // 提取 scheduler 调度函数为一个独立的函数 job
+  const job = () => {
+    // 在 scheduler 中重新执行副作用函数，得到的是新值
+    newValue = effectFn()
+    // 将旧值和新值作为回调函数的参数
+    cb && cb(oldValue, newValue)
+    // 更新旧值，以便下一次获取旧值时时正确的
+    oldValue = newValue
+  }
 
-const comText = computed(() => dataProxy.count + dataProxy.text)
+  // 使用 effect 注册副作用函数时，开启 lazy 选项，并把返回值存储到 effectFn 中以便后续手动调用
+  const effectFn = effect(
+    // 执行 getter
+    () => getter(),
+    {
+      lazy: true,
+      scheduler: () => {
+        // 在调度函数中判断 flush 是否为 'post'，如果是，则将其放到微任务队列中执行
+        if(options.flush === "post"){
+          const p = Promise.resolve()
+          p.then(job)
+        } else {
+          job()
+        }
+      }
+    }
+  )
 
-effect(() => {
-  console.log(comText.value) // 1hello
-})
+  // 判断 immediate 是否为 true
+  if (options.immediate) {
+    job()
+  } else {
+    // 手动调用副作用函数，得到的就是旧值
+    oldValue = effectFn()
+  }
+}
 
-dataProxy.count++ // 2hello
-// console.log(comText.value)
+// 递归方法，用来读取 watch 中传入的对象的属性
+function traverse(value, seen = new Set()) {
+  // seen 用来保存已经读取过的属性
+  // 如果传入的数据是原始数据类型，或者已经被读取过了，则什么都不做
+  if (typeof value !== 'object' || value === null || seen.has(value)) return
+  // 将读取了的属性存储到 seen 中，避免循环引用
+  seen.add(value)
+  // 暂时不考虑数组等其他结构
+  // 假设 value 是一个对象，使用 for...in 读取对象的每一个值，并递归调用 traverse 方法
+  for (const key in value) {
+    traverse(value[key], seen)
+  }
+
+  return value
+}
+
+watch(
+  () => dataProxy.count,
+  (oldValue, newValue) => {
+    console.log("响应式数据改变了", oldValue, newValue)
+  },
+  {
+    immediate: true
+  }
+) // 响应式数据改变了 undefined 1
+
+dataProxy.count++ // 响应式数据改变了 1 2
