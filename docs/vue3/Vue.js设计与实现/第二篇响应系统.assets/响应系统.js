@@ -2,7 +2,7 @@
  * @Author: 二师弟
  * @Date: 2023-03-20 19:27:53
  * @LastEditors: 二师弟
- * @LastEditTime: 2023-03-21 18:10:45
+ * @LastEditTime: 2023-03-22 17:18:59
  * @Description: 《Vuejs设计与实现》中响应系统的示例代码
  */
 // 原始数据
@@ -202,12 +202,24 @@ function watch(source, cb, options = {}) {
 
   // 定义新值和旧值
   let oldValue, newValue
+  // 定义 cleanup 变量用来存储用户注册的过期回调函数，这跟我们在外面定义的 cleanup 全局方法不一样
+  let cleanup
+  // 定义 onInvalidate 函数
+  function onInvalidate(fn) {
+    // 将过期的回调存储到 cleanup 中
+    cleanup = fn
+  }
+
   // 提取 scheduler 调度函数为一个独立的函数 job
   const job = () => {
     // 在 scheduler 中重新执行副作用函数，得到的是新值
     newValue = effectFn()
-    // 将旧值和新值作为回调函数的参数
-    cb && cb(oldValue, newValue)
+    // 调用回调函数前，清除过期回调
+    if (cleanup) {
+      cleanup()
+    }
+    // 将旧值和新值作为回调函数的参数，将 onInvalidate 作为第三个参数
+    cb && cb(newValue, oldValue, onInvalidate)
     // 更新旧值，以便下一次获取旧值时时正确的
     oldValue = newValue
   }
@@ -220,7 +232,7 @@ function watch(source, cb, options = {}) {
       lazy: true,
       scheduler: () => {
         // 在调度函数中判断 flush 是否为 'post'，如果是，则将其放到微任务队列中执行
-        if(options.flush === "post"){
+        if (options.flush === "post") {
           const p = Promise.resolve()
           p.then(job)
         } else {
@@ -263,6 +275,6 @@ watch(
   {
     immediate: true
   }
-) // 响应式数据改变了 undefined 1
+) // 响应式数据改变了 1 undefined
 
-dataProxy.count++ // 响应式数据改变了 1 2
+dataProxy.count++ // 响应式数据改变了 2 1
