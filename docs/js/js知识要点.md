@@ -901,8 +901,8 @@ const callback = (entries) => {
 		if (entry.isIntersecting) {
 			// target 表示这个元素本身
 			const image = entry.target
-			const data_src = image.getAttritube("data-src")
-			image.setAttritube("src", data_src)
+			const data_src = image.getAttribute("data-src")
+			image.setAttribute("src", data_src)
 			// 给已经进入视口的元素移除观察，以免事件重复触发
 			observer.unobserve(image)
 		}

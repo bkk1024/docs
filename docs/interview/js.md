@@ -47,9 +47,64 @@ function fn() {
 
    ![64b5ca449b2bc91c9757d8e31c9214ec](./js.assets/64b5ca449b2bc91c9757d8e31c9214ec.jpeg)
 
-2. 递归的方式：[递归实现深拷贝](../js/js方法.md#传统深克隆方法)
+2. 递归的方式：[递归实现深拷贝](../js/js方法.md#传统深克隆方法) 
 
-3. 使用`MessageChannel()`：[使用 MessageChannel 实现深拷贝](../js/js方法.md#使用-messagechannel-方法)
+3. 使用`MessageChannel()`：[使用 MessageChannel 实现深拷贝](../js/js方法.md#使用-messagechannel-方法) 
 
 4. 使用`lodash`库
+
+## 4、将下面代码使用闭包改为从 0 - 9 的输出
+
+题干
+
+```js
+var funcs = []
+for (var i = 0; i < 10; i++) {
+  funcs.push(function() { console.log(i) })
+}
+funcs.forEach(func => {
+  func()
+})
+```
+
+- 用闭包的方式：
+
+  ```js
+  var funcs = []
+  for (var i = 0; i < 10; i++) {
+    // 闭包
+    (function(j) {
+      funcs.push(function() { console.log(j) })
+    })(i)
+  }
+  funcs.forEach(func => {
+    func()
+  })
+  ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

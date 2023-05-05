@@ -48,3 +48,15 @@
 
 一般就这三种常用
 
+## 3、position 的属性
+
+这个虽然之前用得多，但是有些还是容易一时脑抽就忘记，真见鬼了😒，看来还是记得不牢。
+
+1. static：默认值
+2. initial：设置该属性为默认值
+3. relative：相对定位
+4. absolute：绝对定位
+5. fixed：固定定位
+6. sticky：粘性定位
+7. inherit：规定应该从父元素继承 position 的值
+
