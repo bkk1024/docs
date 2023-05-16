@@ -97,7 +97,7 @@ css：
 - 多行：
 
   ```css
-  overflow: hidden;
+  display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3; // 行数
   overflow: hidden;
@@ -187,7 +187,7 @@ W3C 盒模型：宽高不包含内边距和边框
 
 IE 盒模型：宽高包含内边距和边框
 
-通过 box-sizing: border-box 设置为 W3C 盒模型
+通过 box-sizing: border-box 设置为 IE 盒模型
 
 ## 13、重绘和重排
 
