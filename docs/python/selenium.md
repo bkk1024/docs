@@ -8,7 +8,7 @@
 
 ## 下载浏览器驱动器
 
-chrome浏览器驱动：https://chromedriver.storage.googleapis.com/index.html 
+chrome 浏览器驱动：https://chromedriver.storage.googleapis.com/index.html
 
 ## 首先要导入的各个模块和其作用
 
@@ -48,22 +48,22 @@ driver.quit()
 
 ## By 有几种选择器
 
-![./image-20230522151353925](selenium.assets/image-20230522151353925.png)
+![./image-20230522151353925](./selenium.assets/image-20230522151353925.png)
 
-| 选择器名称        | 选择器内容          | 描述                                                         |
-| ----------------- | ------------------- | ------------------------------------------------------------ |
-| ID                | "id"                | id 选择器                                                    |
-| XPATH             | "xpath"             | xpath，具体看[学爬虫利器XPath,看这一篇就够了](https://zhuanlan.zhihu.com/p/29436838) |
-| LINK_TEXT         | "link text"         | 超链接                                                       |
-| PARTIAL_LINK_TEXT | "partial link text" | 超链接部分文本                                               |
-| NAME              | "name"              | name 属性                                                    |
-| TAG_NAME          | "tag name"          | 标签选择器                                                   |
-| CLASS_NAME        | "class name"        | 类选择器                                                     |
+| 选择器名称        | 选择器内容          | 描述                                                                                                             |
+| ----------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| ID                | "id"                | id 选择器                                                                                                        |
+| XPATH             | "xpath"             | xpath，具体看[学爬虫利器 XPath,看这一篇就够了](https://zhuanlan.zhihu.com/p/29436838)                            |
+| LINK_TEXT         | "link text"         | 超链接                                                                                                           |
+| PARTIAL_LINK_TEXT | "partial link text" | 超链接部分文本                                                                                                   |
+| NAME              | "name"              | name 属性                                                                                                        |
+| TAG_NAME          | "tag name"          | 标签选择器                                                                                                       |
+| CLASS_NAME        | "class name"        | 类选择器                                                                                                         |
 | CSS_SELECTOR      | "class selector"    | css 选择器，具体看[CSS 选择器 - CSS：层叠样式表](https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Selectors) |
 
 ## 最大化窗口
 
-`driver.maximize_window()` 
+`driver.maximize_window()`
 
 ## 使用类（class），改写第一个案例
 
@@ -78,7 +78,7 @@ class TestCase():
     self.driver.get("http://www.baidu.com")
     self.driver.maximize_window()
     pass
-  
+
   def TestId(self):
     self.driver.find_element(By.ID, "kw").send_keys("selenium")
     self.driver.find_element(By.ID, "kw").click()
@@ -119,7 +119,7 @@ driver.find_elements() # 返回找到的所有匹配的元素
 | refresh()                | 浏览器刷新     |
 | close()                  | 关闭当前窗口   |
 | quit()                   | 退出浏览器     |
-| switch_to_.frame()       | 切换到 frame   |
+| switch*to*.frame()       | 切换到 frame   |
 | switch_to.alert()        | 切换到 alert   |
 | switch_to.active_element | 切换到活动元素 |
 
@@ -148,7 +148,7 @@ driver.find_elements() # 返回找到的所有匹配的元素
 | is_selected()           | 是否被选中 |
 | is_enabled()            | 是否可用   |
 | is_displayed()          | 是否显示   |
-| value_of_css_property() | css属性值  |
+| value_of_css_property() | css 属性值 |
 
 ## 下拉列表操作
 
@@ -211,7 +211,7 @@ WebDriverWait 参数：
 
 1. dirver：传入 WebDriver 实例
 2. timeout：设置超时时间
-3. poll_frequency：调用 until 或 until_not 中的方法的间隔时间，默认 0.5s 
+3. poll_frequency：调用 until 或 until_not 中的方法的间隔时间，默认 0.5s
 4. ignored_exceptions：忽略的异常
 
 这个模块只有两个方法：until 和 until_not。方法的参数如下：
@@ -230,25 +230,25 @@ wait.until(expected_conditions.title_is("百度一下，你就知道"))
 
 ## expected_conditions 模块中的一些等待条件
 
-| 条件                                     | 描述                                                         | 返回值     |
-| ---------------------------------------- | ------------------------------------------------------------ | ---------- |
-| title_is()                               | 判断title是否出现                                            | boolean    |
-| title_contains()                         | 判断title是否包含某些字符                                    | boolean    |
-| presence_of_element_located()            | 判断某个元素是否被加入到了DOM树中，并不代表该元素一定可见    | WebElement |
-| visibility_of_element_located()          | 判断某个元素是否被添加到了DOM树中，并且这个元素可见，宽高都大于0 | WebElement |
-| visibility_of()                          | 判断这个元素是否可见，可见就返回这个元素                     | WebElement |
-| presence_of_all_elements_located()       | 判断是否至少有一个元素存在于DOM树中                          | 列表       |
-| visibility_of_any_elements_located()     | 判断是否至少有一个元素在页面中可见                           | 列表       |
-| text_to_be_present_in_element()          | 判断指定的元素中是否包含预期的字符串                         | boolean    |
-| text_to_be_present_in_element_value()    | 判断指定的元素的属性值中是否包含了预期的字符串               | boolean    |
-| frame_to_be_available_and_switch_to_it() | 判断该frame是否可以switch进去                                | boolean    |
-| invisibility_of_element_located()        | 判断某个元素是否存在于DOM中或者不可见                        | boolean    |
-| element_to_be_clickable()                | 判断某个元素是否可见并且可以点击                             | boolean    |
-| staleness_of()                           | 等待某个元素从DOM树中移除                                    | boolean    |
-| element_to_be_selected()                 | 判断某个元素是否被选中了，一般用在下拉列表                   | boolean    |
-| element_selection_state_to_be()          | 判断某个元素的选中状态是否符合预期                           | boolean    |
-| element_located_selection_state_to_be()  | 判断某个元素的选中状态似乎否符合预期                         | boolean    |
-| alert_is_present()                       | 判断页面上是否存在alert                                      | alert      |
+| 条件                                     | 描述                                                                | 返回值     |
+| ---------------------------------------- | ------------------------------------------------------------------- | ---------- |
+| title_is()                               | 判断 title 是否出现                                                 | boolean    |
+| title_contains()                         | 判断 title 是否包含某些字符                                         | boolean    |
+| presence_of_element_located()            | 判断某个元素是否被加入到了 DOM 树中，并不代表该元素一定可见         | WebElement |
+| visibility_of_element_located()          | 判断某个元素是否被添加到了 DOM 树中，并且这个元素可见，宽高都大于 0 | WebElement |
+| visibility_of()                          | 判断这个元素是否可见，可见就返回这个元素                            | WebElement |
+| presence_of_all_elements_located()       | 判断是否至少有一个元素存在于 DOM 树中                               | 列表       |
+| visibility_of_any_elements_located()     | 判断是否至少有一个元素在页面中可见                                  | 列表       |
+| text_to_be_present_in_element()          | 判断指定的元素中是否包含预期的字符串                                | boolean    |
+| text_to_be_present_in_element_value()    | 判断指定的元素的属性值中是否包含了预期的字符串                      | boolean    |
+| frame_to_be_available_and_switch_to_it() | 判断该 frame 是否可以 switch 进去                                   | boolean    |
+| invisibility_of_element_located()        | 判断某个元素是否存在于 DOM 中或者不可见                             | boolean    |
+| element_to_be_clickable()                | 判断某个元素是否可见并且可以点击                                    | boolean    |
+| staleness_of()                           | 等待某个元素从 DOM 树中移除                                         | boolean    |
+| element_to_be_selected()                 | 判断某个元素是否被选中了，一般用在下拉列表                          | boolean    |
+| element_selection_state_to_be()          | 判断某个元素的选中状态是否符合预期                                  | boolean    |
+| element_located_selection_state_to_be()  | 判断某个元素的选中状态似乎否符合预期                                | boolean    |
+| alert_is_present()                       | 判断页面上是否存在 alert                                            | alert      |
 
 ```python
 # 引入模块
@@ -286,8 +286,8 @@ Selenium 中的鼠标和键盘事件被封装在`ActionChains`类中，需要先
 | move_to_element_with_offset(to_element, xoffset, yoffset) | 移动到距离某个元素（左上角坐标）多少距离的位置 |
 | perform()                                                 | 执行链中的所有动作                             |
 | release(on_element = None)                                | 在某个元素位置松开鼠标左键                     |
-| send_keys(*keys_to_send)                                  | 发送某个键到当前焦点的元素                     |
-| send_keys_to_element(element, *keys_to_send)              | 发送某个键到指定元素                           |
+| send_keys(\*keys_to_send)                                 | 发送某个键到当前焦点的元素                     |
+| send_keys_to_element(element, \*keys_to_send)             | 发送某个键到指定元素                           |
 
 ```python
 # 导入ActionChains模块
@@ -326,20 +326,20 @@ driver.execute_script(js)
 
 ## Selenium 屏幕截图
 
-| 方法                             | 描述                                                         |
-| -------------------------------- | ------------------------------------------------------------ |
-| save_screenshot(filename)        | 获取当前屏幕截图，并保存为指定文件，filename为指定保存路径或者图片的文件名 |
-| get_screenshot_as_base64()       | 获取当前屏幕截图base64编码字符串                             |
-| get_screenshot_as_file(filename) | 获取当前屏幕截图，使用完整的路径                             |
-| get_screenshot_as_png()          | 获取当前屏幕截图的二进制文件数据                             |
+| 方法                             | 描述                                                                        |
+| -------------------------------- | --------------------------------------------------------------------------- |
+| save_screenshot(filename)        | 获取当前屏幕截图，并保存为指定文件，filename 为指定保存路径或者图片的文件名 |
+| get_screenshot_as_base64()       | 获取当前屏幕截图 base64 编码字符串                                          |
+| get_screenshot_as_file(filename) | 获取当前屏幕截图，使用完整的路径                                            |
+| get_screenshot_as_png()          | 获取当前屏幕截图的二进制文件数据                                            |
 
 ## Selenium 定位 frame iframe
 
-| 方法                        | 描述                                                         |
-| --------------------------- | ------------------------------------------------------------ |
-| switch_to.frame(reference)  | 切换frame，reference是传入的参数，用来定位frame，可以传入id、name、index以及selenium的WebElement对象 |
-| switch_to.default_content() | 返回主文档                                                   |
-| switch_to.parent_frame()    | 返回父文档                                                   |
+| 方法                        | 描述                                                                                                          |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| switch_to.frame(reference)  | 切换 frame，reference 是传入的参数，用来定位 frame，可以传入 id、name、index 以及 selenium 的 WebElement 对象 |
+| switch_to.default_content() | 返回主文档                                                                                                    |
+| switch_to.parent_frame()    | 返回父文档                                                                                                    |
 
 ## 使用 pytesseract 模块和 Pillow 模块实现验证码识别
 
@@ -397,5 +397,4 @@ def get_code_img(driver, id):
 
 这个就看个人选择了
 
-## 
-
+##
