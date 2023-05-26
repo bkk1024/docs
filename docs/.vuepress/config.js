@@ -54,6 +54,15 @@ export default defineUserConfig({
               }
             ]
           },
+          {
+            text: "python",
+            children: [
+              {
+                text: "python爬虫",
+                link: "/python/selenium"
+              }
+            ]
+          }
         ],
       },
       {
