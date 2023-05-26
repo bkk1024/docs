@@ -213,6 +213,13 @@ export default defineUserConfig({
           children: ["tsconfig.json配置", "声明文件d.ts"],
         },
       ],
+      "/python/": [
+        {
+          text: "python爬虫相关",
+          collapsible: true,
+          children: ["selenium", "FastAPI", "excel", "日志模块"],
+        },
+      ],
       "/build-tools/": [
         {
           text: "vite",
