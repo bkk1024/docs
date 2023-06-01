@@ -226,7 +226,7 @@ export default defineUserConfig({
         {
           text: "python爬虫相关",
           collapsible: true,
-          children: ["selenium", "FastAPI", "excel", "日志模块", "mongoDB"],
+          children: ["selenium", "FastAPI", "excel", "日志模块", "mongoDB", "并发编程"],
         },
       ],
       "/build-tools/": [
