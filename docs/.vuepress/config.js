@@ -185,6 +185,20 @@ export default defineUserConfig({
         ],
       },
       {
+        text: "React",
+        children: [
+          {
+            text: "React18",
+            children: [
+              {
+                text: "react18学习笔记",
+                link: "/react/react18.md"
+              }
+            ]
+          }
+        ]
+      },
+      {
         text: "LeetCode",
         link: "/leetcode/leetcode算法",
       },
