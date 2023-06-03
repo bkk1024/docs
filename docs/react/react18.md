@@ -136,3 +136,103 @@ const list = <ul>{lis}</ul>
 ```
 
 这样，就得到了我们想要的列表。
+
+> 在渲染列表时，每个列表元素都应该给一个唯一的 key。如下，这里的`item.key`只是示例，这个 key 也可以是其他的唯一标识：
+>
+> `let lis = arr.map(item => <li key="item.key">{item}</li>)`
+>
+> 如果不指定 key，react 会按顺序从列表第一个对比到最后一个，有 key，则会根据 key 去进行比较。这样的区别在于，如果我们列表中的改变是某些元素的顺序变了（如在某个地方插入了一个属性），则没有 key 时，react 会更新从插入元素开始的所有元素，而有 key 时，则只会更新插入的元素。
+
+## 手动创建 react 项目
+
+在创建  react 项目时，我们可以选择使用 npm 等作为包管理器来对项目进行管理。react 官方为了方便我们的开发，提供了`react-scripts`包，这里面提供了项目开发中的大部分依赖，大大简化了项目开发。
+
+开发步骤如下：
+
+1. 创建项目，目录结构如下：
+
+   ![image-20230603135002084](./react18.assets/image-20230603135002084.png)
+
+2. 进入项目目录，执行命令初始化项目：`npm init -y`
+
+3. 安装项目依赖：`npm install react react-dom react-scripts -S`
+
+4. 在`public/index.html`中添加一个根元素`<div id="root"></div>`
+
+5. 在`scr/index.js`中添加一点代码：
+
+   ```js
+   // 引入 ReactDOM
+   import ReactDOM from "react-dom/client"
+   
+   // 创建一个 jsx
+   const App = <div>
+     <h1>这是一个 react 项目</h1>
+     <p>这是手动创建的项目</p>
+   </div>
+   
+   // 获取根元素
+   const root = ReactDOM.createRoot(document.querySelector("#root"))
+   root.render(App)
+   ```
+
+6. 然后在终端中使用`npx react-scripts start`或者`npx react-scripts build`可以启动项目或者打包项目。但是这样命令太长，因此我们可以在`package.json`中添加如下代码：
+
+   ```json
+   // 这里可以省略 npx，写上也是一样的效果
+   "scripts": {
+     "dev": "react-scripts start",
+   	"build": "react-scripts build"
+   },
+   ```
+
+7. 最后我们使用`npm run dev`或者`npm run build`就可以启动项目或者打包了
+
+## react 组件
+
+react 中定义组件的方式有两种：基于函数的组件和基于类的组件。
+
+### 函数式组件
+
+函数组件就是一个返回 jsx 的普通函数，简单示例如下：
+
+```js
+/* 在 App.js 中创建组件，并导出 */
+const App = () => {
+  return <div>我是一个函数组件</div>
+}
+
+export default App
+
+
+/* 在 index.js 中引入组件，并使用 */
+// 引入 ReactDOM
+import ReactDOM from "react-dom/client"
+// 引入样式
+import "./index.css"
+// 引入组件
+import App from "./App"
+
+// 获取根元素
+const root = ReactDOM.createRoot(document.querySelector("#root"))
+// 渲染 App 组件
+root.render(<App />)
+```
+
+### 类组件
+
+```js
+import React from "react"
+
+// 类组件必须要继承 React.Component
+class App extends React.Component {
+  // 类组件中，必须添加一个 render() 方法，且方法的返回值要是一个 jsx
+  render() {
+    return <div>我是一个类组件</div>
+  }
+}
+
+export default App
+```
+
+> 相较于函数组件，类组件的书写要麻烦一些，但是它们的作用是一样的。
