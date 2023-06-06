@@ -192,6 +192,10 @@ const list = <ul>{lis}</ul>
 
 7. 最后我们使用`npm run dev`或者`npm run build`就可以启动项目或者打包了
 
+## 自动创建 react 项目
+
+`npx create-react-app 项目名`
+
 ## react 组件
 
 react 中定义组件的方式有两种：基于函数的组件和基于类的组件。
@@ -256,8 +260,18 @@ export default App
 
 属性值不能直接执行代码，而是需要一个回调函数，不能写此类代码：
 
-- onClick="alert(123)"，这类代码不会执行
-- onClick="{() => alert(123)}"，这类代码会执行
+- onClick="alert(123)"，这类代码在第一次渲染组件的时候就会直接执行
+- onClick="{() => alert(123)}"，这类代码会在点击的时候才执行
+
+::: tip 要给事件传递参数时
+
+如果我们的事件需要传递一些参数，则应该使用如下写法，才能保证代码正常运行：
+
+```jsx
+<div onClick={(e) => addHandler(id)}></div>
+```
+
+:::
 
 完整示例代码：
 
@@ -646,15 +660,192 @@ const App = () => {
 export default App
 ```
 
+## 提取公共数据
 
+当遇到一个数据需要被多个组件使用时，我们可以将数据放入到这些组件共同的祖先元素中，这样就可以使得多个组件都能方便的访问到这个数据。
 
+## 子组件给父组件传值
 
+使用自定义事件，即在父组件中定义一个事件，然后传递给子组件，子组件调用这个事件，并将父组件需要的数据以函数参数的形式传递过去。
 
+- 父组件：
 
+  ```jsx
+  import LogsForm from "./Components/LogsForm/LogsForm"
+  
+  const App = () => {
+    // 定义一个事件
+    const saveLoghandler = (newLog) => {
+      console.log(newLog)
+    }
+  
+    return <div>
+      {/* 将自定义事件传递给子组件 */}
+      <LogsForm onSaveLog={saveLoghandler} />
+    </div>
+  }
+  
+  export default App
+  ```
 
+- 子组件
 
+  ```jsx
+  import React from 'react'
+  import { useState } from 'react'
+  
+  const LogsForm = (props) => {
+    const [date, setDate] = useState("")
+  
+    const dateChangeHandler = (e) => {
+      setDate(e.target.value)
+    }
+    const addHandler = () => {
+      const newLog = {
+        date: new Date(date),
+      }
+      // 子组件调用父组件传递的事件，并将需要的数据传递过去
+      props.onSaveLog(newLog)
+      setDate("")
+    }
+  
+    return (
+      <div>
+        日期：<input type="date" value={date} onChange={dateChangeHandler} /> <br />
+        <button onClick={addHandler}>添加</button>
+      </div>
+    )
+  }
+  
+  export default LogsForm
+  ```
 
+## portal：传送组件，可以理解为vue3的teleport
 
+一般来说，组件会默认作为父组件的后代渲染到页面中，但是在有些情况下，这种方式会带来一些问题，如一些弹窗组件会因为其父组件的css中包含定位或设置层级的样式而出错。
+
+这是我们可以通过`portal`将组件渲染到页面中的指定位置。使用步骤如下：
+
+1. 在`index.html`中添加一个新的元素，用于专门渲染这个传送组件：
+
+   ```html
+   <body>
+     <!-- 这个是根元素 -->
+   	<div id="root"></div>
+     <!-- 专门渲染遮罩层 -->
+     <div id="mask-root"></div>
+   </body>
+   ```
+
+2. 修改组件的渲染方式
+
+   - 在被传送的组件中使用`ReactDOM.createPortal()`创建一个传送门，有两个参数：
+
+     1. 参数一：要渲染的模板
+     2. 参数二：用来放置这个组件的元素
+
+     ```jsx
+     import React from 'react'
+     import "./ConfirmModal.css"
+     import ReactDOM from "react-dom"
+     
+     // 获取要传送到的根组件
+     const maskDrop = document.querySelector("#mask-root")
+     
+     const ConfirmModal = (props) => {
+       const template = (
+         <div className='mask'>
+           我是被传送的组件
+         </div>
+       )
+       {/* 通过 ReactDOM.createPortal() 作为返回值 */}
+       return ReactDOM.createPortal(template, maskDrop)
+     }
+     
+     export default ConfirmModal
+     ```
+
+::: tip
+
+`protal`主要就是用于一些弹出层，如弹窗之类的组件。
+
+导入`ReactDOM`时，**如下导入方式都会导致报错**：
+
+```js
+// import {ReactDOM} from "react-dom"
+// import ReactDOM from "react-dom/client"
+// import {ReactDOM} from "react-dom/client"
+
+// 只有这种导出方式是不会报错的
+import ReactDOM from "react-dom"
+```
+
+:::
+
+## CSS_Module：可以理解为 vue 中 style:scoped
+
+CSS_Module 是一种用于在 React 和 Webpack 中创建 CSS 模块化的技术。它可以使得 CSS 样式仅在特定的组件中起作用，而不会影响全局样式。
+
+使用步骤如下：
+
+1. 创建一个文件`xxx.module.css`，这个`.module`表示这是一个模块化的 css
+
+2. 引入文件：`import classes from "./xxx.module.css"`
+
+3. 通过`classes.类名`设置类：
+
+   ```jsx
+   import classes from "./App.module.css"
+   
+   const App = () => {
+   	return (
+   		<div className="App">
+   			<p className={classes.p1}>我是一个段落</p>
+   			<button>点我一下</button>
+   		</div>
+   	)
+   }
+   
+   export default App
+   ```
+
+此时，这个类名实际的名字并不是`p1`，这样就保证虽然不同模块中的类名可能相同，但是实际它最终的类名并不相同：
+
+![image-20230606182703421](./react18.assets/image-20230606182703421.png)
+
+## Fragment：理解为vue中的template，或者微信小程序中的block
+
+Fragment 是 React 中的一个组件，它可以**用来包裹其他组件，但它本身不会被渲染到页面上**。它可以用来解决在一个组件中返回多个元素的问题，因为在 React 中，一个组件只能返回一个根元素。使用 Fragment 可以让开发者在不增加额外 DOM 元素的情况下，返回多个元素。
+
+例如：
+
+```jsx
+import React, { Fragment } from 'react';
+
+function MyComponent() {
+  return (
+    <Fragment>
+      <h1>Hello</h1>
+      <p>World</p>
+    </Fragment>
+  )
+}
+```
+
+它还有一个语法糖，即直接用`<></>`即可：
+
+```jsx
+import React from 'react';
+
+function MyComponent() {
+  return (
+    <>
+      <h1>Hello</h1>
+      <p>World</p>
+    </>
+  )
+}
+```
 
 
 
