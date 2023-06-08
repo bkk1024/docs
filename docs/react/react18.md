@@ -2,13 +2,13 @@
 
 ## 前言
 
-这个学习笔记是学习[b站 | 李立超老师 | React18教程](https://www.bilibili.com/video/BV1bS4y1b7NV?p=13&vd_source=16ba8f2131220773e361fb00f3cb12fb)的记录。
+这个学习笔记是学习[b 站 | 李立超老师 | React18 教程](https://www.bilibili.com/video/BV1bS4y1b7NV?p=13&vd_source=16ba8f2131220773e361fb00f3cb12fb)的记录。
 
-## react中三个常用的api
+## react 中三个常用的 api
 
 1. `React.createElement()`：它用来创建一个 react 元素，这个 react 元素并不是真正的 DOM 元素。它有三个参数：
 
-   1. 元素名/组件名：html标签必须小写
+   1. 元素名/组件名：html 标签必须小写
    2. 元素的属性：如 id、class 等
       - 在设置事件时，属性名需要修改为驼峰命名法
       - class 属性需要使用 className 来设置
@@ -21,7 +21,7 @@
      className: "btn1",
      onClick: () => alert("haha")
    }, "点击")
-   
+
    const div = React.createElement("div", {}, button, "点击前面的按钮")
    ```
 
@@ -35,7 +35,7 @@
 
    - 一般一个页面中只有一个根元素
    - 它会清除根元素中的所有内容，然后用 react 元素替代
-   - 当重复调用这个方法时，react 会将两次的渲染结果进行比较，然后只修改发生变化的部分（diff算法/DOM差分算法）
+   - 当重复调用这个方法时，react 会将两次的渲染结果进行比较，然后只修改发生变化的部分（diff 算法/DOM 差分算法）
 
    ```js
    const button = React.createElement("button", {
@@ -106,12 +106,12 @@ jsx 的注意事项：
    - style 中必须使用对象设置，多单词组合需要使用驼峰形式，如`background-color => backgroundColor`
 
    ```jsx
-   const div = <div 
-                 id="mydiv" 
-                 className="box" 
-                 style={{ 
-             			color: "red", 
-                   backgroundColor: "gray" 
+   const div = <div
+                 id="mydiv"
+                 className="box"
+                 style={{
+             			color: "red",
+                   backgroundColor: "gray"
            		}}></div>
    ```
 
@@ -149,7 +149,7 @@ const list = <ul>{lis}</ul>
 
 ## 手动创建 react 项目
 
-在创建  react 项目时，我们可以选择使用 npm 等作为包管理器来对项目进行管理。react 官方为了方便我们的开发，提供了`react-scripts`包，这里面提供了项目开发中的大部分依赖，大大简化了项目开发。
+在创建 react 项目时，我们可以选择使用 npm 等作为包管理器来对项目进行管理。react 官方为了方便我们的开发，提供了`react-scripts`包，这里面提供了项目开发中的大部分依赖，大大简化了项目开发。
 
 开发步骤如下：
 
@@ -168,13 +168,13 @@ const list = <ul>{lis}</ul>
    ```js
    // 引入 ReactDOM
    import ReactDOM from "react-dom/client"
-   
+
    // 创建一个 jsx
    const App = <div>
      <h1>这是一个 react 项目</h1>
      <p>这是手动创建的项目</p>
    </div>
-   
+
    // 获取根元素
    const root = ReactDOM.createRoot(document.querySelector("#root"))
    root.render(App)
@@ -326,7 +326,7 @@ const Son = (props) => {
 export default Son
 ```
 
-::: tip 
+::: tip
 
 函数式组件中，在函数中传入一个`props`参数，这个参数中就包含父组件给子组件传递的所有的数据。
 
@@ -374,7 +374,7 @@ const SetState = () => {
     setCounter(counter - 1)
     console.log(counter)
   }
-  
+
   return (
     <div>
       <h1>{counter}</h1>
@@ -393,12 +393,12 @@ export default SetState
 
    ```js
    const [user, setUser] = useState({name: "zhangsan", age: 18})
-   
+
    // 方法一：
    const newUser = Object.assign({}, user)
    newUser.age = 28
    setUser(newUser)
-   
+
    // 方法二：
    setUser({...user, name: "lisi"})
    ```
@@ -525,24 +525,24 @@ const SetState = () => {
 export default SetState
 ```
 
-## Ref：获取DOM对象
+## Ref：获取 DOM 对象
 
 ### 函数组件
 
-- 我们可以通过 js 原生的方式来获取DOM，但是不建议这么做
+- 我们可以通过 js 原生的方式来获取 DOM，但是不建议这么做
 
-- 直接从 react 处获取DOM对象
+- 直接从 react 处获取 DOM 对象
 
-  1. 创建一个存储DOM对象的容器，使用`useRef()`钩子函数
+  1. 创建一个存储 DOM 对象的容器，使用`useRef()`钩子函数
 
      ```jsx
      import { useRef } from "react"
      import React from 'react'
-     
+
      const SetState = () => {
      	// 创建存储DOM对象的容器
        const h1Ref = useRef()
-     
+
        const clickHandler = () => {
          console.log(h1Ref)
        }
@@ -553,18 +553,18 @@ export default SetState
          </div>
        )
      }
-     
+
      export default SetState
      ```
 
      ::: tip
 
-     1. react中的钩子函数只能用于函数组件或者自定义钩子
+     1. react 中的钩子函数只能用于函数组件或者自定义钩子
      2. 钩子函数只能直接在函数组件中调用
 
      :::
 
-  2. 将容器设置为想要获取DOM对象元素的`ref`属性
+  2. 将容器设置为想要获取 DOM 对象元素的`ref`属性
 
      ```jsx
      import { useRef } from "react"
@@ -589,13 +589,11 @@ export default SetState
      export default SetState
      ```
 
-     
-
 ::: tip
 
 `useRef()`返回的就是一个普通的 js 对象，所以我们直接使用`{current: null}`创建一个 js 对象，也可以代替`useRef()`，但是我们自己创建的对象在组件重新渲染时，每次都会创建一个新对象，这个新对象与上一次的对象不是同一个，而`useRef()`创建的对象可以保证每次渲染的对象都是同一个对象。
 
-当我们需要一个对象不会因为组件的重新渲染而改变时，就可以使用`useRef()`，在获取DOM对象时，我们建议使用`useRef()`。
+当我们需要一个对象不会因为组件的重新渲染而改变时，就可以使用`useRef()`，在获取 DOM 对象时，我们建议使用`useRef()`。
 
 :::
 
@@ -625,7 +623,7 @@ export default class ClassCom extends Component {
 }
 ```
 
-## 标签插入内容：可以理解为vue插槽
+## 标签插入内容：可以理解为 vue 插槽
 
 `props.children`可以获取到给组件中插入的内容：
 
@@ -672,19 +670,19 @@ export default App
 
   ```jsx
   import LogsForm from "./Components/LogsForm/LogsForm"
-  
+
   const App = () => {
     // 定义一个事件
     const saveLoghandler = (newLog) => {
       console.log(newLog)
     }
-  
+
     return <div>
       {/* 将自定义事件传递给子组件 */}
       <LogsForm onSaveLog={saveLoghandler} />
     </div>
   }
-  
+
   export default App
   ```
 
@@ -720,9 +718,9 @@ export default App
   export default LogsForm
   ```
 
-## portal：传送组件，可以理解为vue3的teleport
+## portal：传送组件，可以理解为 vue3 的 teleport
 
-一般来说，组件会默认作为父组件的后代渲染到页面中，但是在有些情况下，这种方式会带来一些问题，如一些弹窗组件会因为其父组件的css中包含定位或设置层级的样式而出错。
+一般来说，组件会默认作为父组件的后代渲染到页面中，但是在有些情况下，这种方式会带来一些问题，如一些弹窗组件会因为其父组件的 css 中包含定位或设置层级的样式而出错。
 
 这是我们可以通过`portal`将组件渲染到页面中的指定位置。使用步骤如下：
 
@@ -813,7 +811,7 @@ CSS_Module 是一种用于在 React 和 Webpack 中创建 CSS 模块化的技术
 
 ![image-20230606182703421](./react18.assets/image-20230606182703421.png)
 
-## Fragment：理解为vue中的template，或者微信小程序中的block
+## Fragment：理解为 vue 中的 template，或者微信小程序中的 block
 
 Fragment 是 React 中的一个组件，它可以**用来包裹其他组件，但它本身不会被渲染到页面上**。它可以用来解决在一个组件中返回多个元素的问题，因为在 React 中，一个组件只能返回一个根元素。使用 Fragment 可以让开发者在不增加额外 DOM 元素的情况下，返回多个元素。
 
@@ -860,7 +858,7 @@ document.documentElement.style.fontSize = 100 / 750 + "vw"
 // 如果此时有一个元素，它在设计图中的宽度为 100px，则我们这样写：width: 100rem;
 ```
 
-## 使用FontAwesome字体图标库
+## 使用 FontAwesome 字体图标库
 
 1. 首先安装依赖
 
@@ -888,9 +886,9 @@ document.documentElement.style.fontSize = 100 / 750 + "vw"
    <FontAwesomeIcon icon={faPlus}/>
    ```
 
-## Context：解决props层层传递数据和方法的问题
+## Context：解决 props 层层传递数据和方法的问题
 
-如果我们有一个方法，在A组件中定义，在D组件中使用，一般情况下，我们会将这个方法从A => B => C => D 传递，这样实在是过于麻烦。因此我们可以使用`Context`。
+如果我们有一个方法，在 A 组件中定义，在 D 组件中使用，一般情况下，我们会将这个方法从 A => B => C => D 传递，这样实在是过于麻烦。因此我们可以使用`Context`。
 
 `Context`为我们提供了一种在不同组件间共享数据的方式，它不再拘泥于 props 刻板的逐层传递，而是**在外层组件中统一设置，设置后，内层的所有组件都可以直接访问**。
 
@@ -900,13 +898,13 @@ document.documentElement.style.fontSize = 100 / 750 + "vw"
 
    ```js
    import React from "react"
-   
+
    // 这里只是做个演示，一般我们不会在这里把数据写死，而是在提供数据的组件中去提供数据
    const TestContext = React.createContext({
      name: "zhangsan",
      age: 18
    })
-   
+
    export default TestContext
    ```
 
@@ -915,7 +913,7 @@ document.documentElement.style.fontSize = 100 / 750 + "vw"
    ```jsx
    import React from "react"
    import TestContext from "提供context的文件的路径"
-   
+
    const A = () => {
      return (
        <TestContext.Provide value={{name: "lisi", age: 28}}>
@@ -923,7 +921,7 @@ document.documentElement.style.fontSize = 100 / 750 + "vw"
        </TestContext.Provide>
      )
    }
-   
+
    export default A
    ```
 
@@ -932,20 +930,20 @@ document.documentElement.style.fontSize = 100 / 750 + "vw"
    ```jsx
    import React from "react"
    import TestContext from "提供context的文件的路径"
-   
+
    const B = () => {
      return (
      	<div>
          <TestContext.Consumer>
          	{(ctx) => {
              // 这个 ctx 就是提供的 context
-             return <div>{ctx.name, ctx.age}</div> 
+             return <div>{ctx.name, ctx.age}</div>
            }}
          </TestContext.Consumer>
        </div>
      )
    }
-   
+
    export default B
    ```
 
@@ -958,7 +956,7 @@ document.documentElement.style.fontSize = 100 / 750 + "vw"
    const C = () => {
      // 使用一个钩子，获取提供的 context
      const ctx = useContext(TextContext)
-     
+   
      return (
      	<div>
          {ctx.name, ctx.age}
@@ -971,11 +969,11 @@ document.documentElement.style.fontSize = 100 / 750 + "vw"
 
 ## Effect：useEffect()专门执行副作用代码
 
-react 组件有部分逻辑可以直接编写到组件的函数体中，如`filter、map`等方法，或者判断某个组件是否显示等。但是有一些罗i就如果直接写在函数体中，会影像到组件的渲染，这部分就是会产生**副作用**的代码，是一定不能写在函数体中的。如直接修改state的逻辑的代码直接写到组件中，会导致组件不断渲染，直到调用次数过多导致内存溢出。
+react 组件有部分逻辑可以直接编写到组件的函数体中，如`filter、map`等方法，或者判断某个组件是否显示等。但是有一些罗 i 就如果直接写在函数体中，会影像到组件的渲染，这部分就是会产生**副作用**的代码，是一定不能写在函数体中的。如直接修改 state 的逻辑的代码直接写到组件中，会导致组件不断渲染，直到调用次数过多导致内存溢出。
 
 ::: details React.StrictMode
 
-编写React组件时，我们要极力的避免组件中出现那些会产生“副作用”的代码。同时，如果你的React使用了严格模式，也就是在React中使用了`React.StrictMode`标签，那么React会非常“智能”的去检查你的组件中是否写有副作用的代码，当然这个智能是加了引号的，我们来看看React官网的文档是如何说明的：
+编写 React 组件时，我们要极力的避免组件中出现那些会产生“副作用”的代码。同时，如果你的 React 使用了严格模式，也就是在 React 中使用了`React.StrictMode`标签，那么 React 会非常“智能”的去检查你的组件中是否写有副作用的代码，当然这个智能是加了引号的，我们来看看 React 官网的文档是如何说明的：
 
 Strict mode can’t automatically detect side effects for you, but it can help you spot them by making them a little more deterministic. This is done by intentionally double-invoking the following functions:
 
@@ -985,7 +983,7 @@ Strict mode can’t automatically detect side effects for you, but it can help y
 - State updater functions (the first argument to `setState`)
 - Functions passed to `useState`, `useMemo`, or `useReducer`
 
-上文的关键字叫做 **“double-invoking”** 即重复调用，这句话是什么意思呢？大概意思就是，React并不能自动替你发现副作用，但是它会想办法让它显现出来，从而让你发现它。那么它是怎么让你发现副作用的呢？React的严格模式，**在开发模式下**，会主动的重复调用一些函数，以使副作用显现。所以在处于开发模式且开启了React严格模式时，这些函数会被调用两次：
+上文的关键字叫做 **“double-invoking”** 即重复调用，这句话是什么意思呢？大概意思就是，React 并不能自动替你发现副作用，但是它会想办法让它显现出来，从而让你发现它。那么它是怎么让你发现副作用的呢？React 的严格模式，**在开发模式下**，会主动的重复调用一些函数，以使副作用显现。所以在处于开发模式且开启了 React 严格模式时，这些函数会被调用两次：
 
 - 类组件的的 `constructor`, `render`, 和 `shouldComponentUpdate` 方法
 - 类组件的静态方法 `getDerivedStateFromProps`
@@ -993,7 +991,7 @@ Strict mode can’t automatically detect side effects for you, but it can help y
 - 参数为函数的`setState`
 - 参数为函数的`useState`, `useMemo`, or `useReducer`
 
-重复的调用会使副作用更容易凸显出来，你可以尝试着在函数组件的函数体中调用一个`console.log`你会发现它会执行两次，如果你的浏览器中安装了React Developer Tools，第二次调用会显示为灰色。
+重复的调用会使副作用更容易凸显出来，你可以尝试着在函数组件的函数体中调用一个`console.log`你会发现它会执行两次，如果你的浏览器中安装了 React Developer Tools，第二次调用会显示为灰色。
 
 :::
 
@@ -1021,13 +1019,13 @@ useEffect(() => {
 
 ::: tip
 
-React 会确保`effect`每次运行时，DOM都已经更新完毕。
+React 会确保`effect`每次运行时，DOM 都已经更新完毕。
 
 :::
 
 ### 清除 Effect
 
-组件的每次重新渲染effect都会执行，有一些情况里，两次effect执行会互相影响。**比如，在effect中设置了一个定时器**，总不能每次effect执行都设置一个新的定时器，所以我们需要在一个effect执行前，清除掉前一个effect所带来的影响。要实现这个功能，可以在effect中将一个函数作为返回值返回，像是这样：
+组件的每次重新渲染 effect 都会执行，有一些情况里，两次 effect 执行会互相影响。**比如，在 effect 中设置了一个定时器**，总不能每次 effect 执行都设置一个新的定时器，所以我们需要在一个 effect 执行前，清除掉前一个 effect 所带来的影响。要实现这个功能，可以在 effect 中将一个函数作为返回值返回，像是这样：
 
 ```js
 useEffect(() => {
@@ -1040,13 +1038,13 @@ useEffect(() => {
 
 ::: tip
 
-**effect返回的函数，会在下一次effect执行前调用，我们可以在这个函数中清除掉前一次effect执行所带来的影响。**
+**effect 返回的函数，会在下一次 effect 执行前调用，我们可以在这个函数中清除掉前一次 effect 执行所带来的影响。**
 
 :::
 
 ### 限制 Effect
 
-组件每次渲染effect都会执行，这似乎并不总那么必要。因此在`useEffect()`中我们可以限制effect的执行时机，在`useEffect()`中可以将一个数组作为第二个参数传递，像是这样：
+组件每次渲染 effect 都会执行，这似乎并不总那么必要。因此在`useEffect()`中我们可以限制 effect 的执行时机，在`useEffect()`中可以将一个数组作为第二个参数传递，像是这样：
 
 ```js
 useEffect(() => {
@@ -1063,4 +1061,123 @@ useEffect(() => {
 **通过传入变量，可以限制`effect`的执行次数。如果直接传入一个空数组，则这个`effect`只会执行一次。**
 
 :::
+
+## Reducer：useReducer()
+
+在 react 的函数组件中，我们可以通过`useState()`来创建 state，这种方式也存在一些不足，因为所有修改 state 的方法都必须通过`setState()`来进行，那么当遇到一些复杂度比较高的 state 时，这种方式似乎就不太优雅。
+
+因此，react 为了解决 state 在这种情况下带来的不便，提供了一个新的使用 state 的方式：`Reducer`。我们可以理解为它的作用就是将那些和同一个 state 相关的所有函数都整合到一起，方便在组件中进行调用。
+
+:::warning
+`Reducer`只适用于比较复杂的 state，对简单的 state 使用它只能徒增烦恼。
+:::
+
+### Reducer 的使用
+
+这里使用一个简单的例子举例，实际使用时，这么简单的 state 可以不用`Reducer`。
+
+使用`useReducer()`来创建`Reducer`，它接收三个参数：
+
+1. reducer 函数：整合函数，对于当前 state 的所有操作都应该在这个函数中定义，该函数的返回值，会成为 state 的新值。这个函数有两个参数：
+   1. 第一个参数：当前最新的 state
+   2. 第二个参数：action，它需要一个对象，在对象中会存储 dispatch 所发送的指令，然后我们在 reducer 中就可以根据传入进来的指令执行不同的代码
+2. state 的初始值，跟`useState()`传入的初始值的功能一样
+3. init：它不是必须的，可以为空。
+
+`Reducer`的返回值是一个数组，有两个元素：
+
+1. state：用来获取 state 的值，跟 useState() 返回的 state 一样
+2. state 的派发器 stateDispatch：通过派发起可以发送操作 state 的命令，具体的修改行为将会由其他函数执行
+
+下面是一个简单的例子：
+
+```jsx
+import React, { useReducer } from "react"
+
+// 一般来说，我们会将 reducer 函数放到组件的函数本体外定义，这是为了不让组件在每次渲染时都重新创建一个 reducer 函数 ，虽然影响不大，但是也会造成性能损耗
+const reducer = (state, action) => {
+	return action.onHandler()
+}
+
+const ReducerTest = () => {
+	const [count, countDispatch] = useReducer(
+		reducer,
+		1
+	)
+
+	const addHandler = () => {
+		countDispatch({
+			onHandler: () => {
+				return count + 1
+			},
+		})
+	}
+
+	const subHandler = () => {
+		countDispatch({
+			onHandler: () => {
+				return count - 1
+			},
+		})
+	}
+
+	return (
+		<div>
+			<div>{count}</div>
+			<button onClick={subHandler}>减少</button>
+			<button onClick={addHandler}>增加</button>
+		</div>
+	)
+}
+
+export default ReducerTest
+```
+
+::: tip
+
+这个例子中，我们给`action`传递的是一个函数，它在不同的执行函数中的内容不同，它返回新的`state`值，最后在`reducer`函数中调用它即可修改`state`的值。
+
+同时，我们也可以传递类似`{type: "ADD"}`这种，然后在`reducer`函数中使用`switch/case`去执行不同类型值的代码（虽然可以使用`if...else...`，但是更建议使用`switch/case`，可以使代码结构更清晰）。
+
+**一般来说，我们会将`reducer`函数放到组件的函数本体外定义，这是为了不让组件在每次渲染时都重新创建一个 reducer 函数 ，虽然影响不大，但是也会造成性能损耗。**
+
+:::
+
+:::  warning
+
+如果使用了`Reducer`之后，发现每次`reducer`函数都会执行两次，那么可能是`<React.StrictMode>`严格模式导致的问题，具体可以看[Effect中关于React.StrictMode的描述](#effect-useeffect-专门执行副作用代码) 。
+
+:::
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
