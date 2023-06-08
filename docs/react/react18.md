@@ -847,13 +847,220 @@ function MyComponent() {
 }
 ```
 
+## 移动端适配
 
+我们可以在`index.js`中添加如下代码，这样来设置移动端的视口大小。其实可以理解为将整个视口分成了多少列，然后我们在写样式是就用 rem 作为单位，如：
 
+```jsx
+// 设置移动端的适配
+// 除以几，蛇口的宽度就是多少rem，即现在我们设置视口的总宽度为750rem
+// 这里的750是自定义的，如果有设计图，则按照设计图的宽度来，如设计图宽为 600px ，则这里除以 600
+document.documentElement.style.fontSize = 100 / 750 + "vw"
 
+// 如果此时有一个元素，它在设计图中的宽度为 100px，则我们这样写：width: 100rem;
+```
 
+## 使用FontAwesome字体图标库
 
+1. 首先安装依赖
 
+   ```sh
+   npm i --save @fortawesome/fontawesome-svg-core
+   npm i --save @fortawesome/free-solid-svg-icons
+   npm i --save @fortawesome/react-fontawesome
+   ```
 
+2. 引入组件
 
+   ```js
+   import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+   ```
 
+3. 引入图标：具体图标可以去官网查询
+
+   ```js
+   import { faPlus } from "@fortawesome/free-solid-svg-icons"
+   ```
+
+4. 使用
+
+   ```jsx
+   <FontAwesomeIcon icon={faPlus}/>
+   ```
+
+## Context：解决props层层传递数据和方法的问题
+
+如果我们有一个方法，在A组件中定义，在D组件中使用，一般情况下，我们会将这个方法从A => B => C => D 传递，这样实在是过于麻烦。因此我们可以使用`Context`。
+
+`Context`为我们提供了一种在不同组件间共享数据的方式，它不再拘泥于 props 刻板的逐层传递，而是**在外层组件中统一设置，设置后，内层的所有组件都可以直接访问**。
+
+> 可以简单理解为 vue 中的`provide/inject`
+
+1. 使用`React.createContext()`创建 context
+
+   ```js
+   import React from "react"
+   
+   // 这里只是做个演示，一般我们不会在这里把数据写死，而是在提供数据的组件中去提供数据
+   const TestContext = React.createContext({
+     name: "zhangsan",
+     age: 18
+   })
+   
+   export default TestContext
+   ```
+
+2. 在外层组件中提供数据
+
+   ```jsx
+   import React from "react"
+   import TestContext from "提供context的文件的路径"
+   
+   const A = () => {
+     return (
+       <TestContext.Provide value={{name: "lisi", age: 28}}>
+       	<div>我是数据的提供者</div>
+       </TestContext.Provide>
+     )
+   }
+   
+   export default A
+   ```
+
+3. 在内层组件使用：方式一，较麻烦
+
+   ```jsx
+   import React from "react"
+   import TestContext from "提供context的文件的路径"
+   
+   const B = () => {
+     return (
+     	<div>
+         <TestContext.Consumer>
+         	{(ctx) => {
+             // 这个 ctx 就是提供的 context
+             return <div>{ctx.name, ctx.age}</div> 
+           }}
+         </TestContext.Consumer>
+       </div>
+     )
+   }
+   
+   export default B
+   ```
+
+4. 在内层组件使用：方式二，更方便优雅
+
+   ```jsx
+   import React from "react"
+   import TestContext from "提供context的文件的路径"
+   
+   const C = () => {
+     // 使用一个钩子，获取提供的 context
+     const ctx = useContext(TextContext)
+     
+     return (
+     	<div>
+         {ctx.name, ctx.age}
+       </div>
+     )
+   }
+   
+   export default C
+   ```
+
+## Effect：useEffect()专门执行副作用代码
+
+react 组件有部分逻辑可以直接编写到组件的函数体中，如`filter、map`等方法，或者判断某个组件是否显示等。但是有一些罗i就如果直接写在函数体中，会影像到组件的渲染，这部分就是会产生**副作用**的代码，是一定不能写在函数体中的。如直接修改state的逻辑的代码直接写到组件中，会导致组件不断渲染，直到调用次数过多导致内存溢出。
+
+::: details React.StrictMode
+
+编写React组件时，我们要极力的避免组件中出现那些会产生“副作用”的代码。同时，如果你的React使用了严格模式，也就是在React中使用了`React.StrictMode`标签，那么React会非常“智能”的去检查你的组件中是否写有副作用的代码，当然这个智能是加了引号的，我们来看看React官网的文档是如何说明的：
+
+Strict mode can’t automatically detect side effects for you, but it can help you spot them by making them a little more deterministic. This is done by intentionally double-invoking the following functions:
+
+- Class component `constructor`, `render`, and `shouldComponentUpdate` methods
+- Class component static `getDerivedStateFromProps` method
+- Function component bodies
+- State updater functions (the first argument to `setState`)
+- Functions passed to `useState`, `useMemo`, or `useReducer`
+
+上文的关键字叫做 **“double-invoking”** 即重复调用，这句话是什么意思呢？大概意思就是，React并不能自动替你发现副作用，但是它会想办法让它显现出来，从而让你发现它。那么它是怎么让你发现副作用的呢？React的严格模式，**在开发模式下**，会主动的重复调用一些函数，以使副作用显现。所以在处于开发模式且开启了React严格模式时，这些函数会被调用两次：
+
+- 类组件的的 `constructor`, `render`, 和 `shouldComponentUpdate` 方法
+- 类组件的静态方法 `getDerivedStateFromProps`
+- 函数组件的函数体
+- 参数为函数的`setState`
+- 参数为函数的`useState`, `useMemo`, or `useReducer`
+
+重复的调用会使副作用更容易凸显出来，你可以尝试着在函数组件的函数体中调用一个`console.log`你会发现它会执行两次，如果你的浏览器中安装了React Developer Tools，第二次调用会显示为灰色。
+
+:::
+
+::: details setState() 的执行流程（函数组件）
+
+如这里有一个`const [count, setCount] = useState(0)`，当调用`setCount()`时，它其实会调用 react 内部的`dispatchSetDate()`方法，它会先判断组件当前处于什么阶段：
+
+- 如果是渲染阶段，则不会检查`state`的值是否相同，直接渲染组件
+- 如果不是渲染阶段，则会检查`state`的值是否相同，若不同，则重新渲染组件，若相同，则不会重新渲染组件。
+- 在值相同时，在一些情况下 react 会继续执行当前组件的渲染，但是这次渲染不会影响其子组件，不会产生实际的效果，这种情况通常发生在`state`的值第一次相同时。
+
+:::
+
+### Effect 的使用
+
+```js
+import {useEffect} from "react"
+
+useEffect(() => {
+  // 这里编写会产生副作用的代码
+})
+```
+
+`useEffect()`中的回调函数会在组件每次渲染完毕之后执行，这也是它和写在函数体中代码的最大的不同，函数体中的代码会在组件渲染前执行，而`useEffect()`中的代码是在组件渲染后才执行，这就避免了代码的执行影响到组件渲染。
+
+::: tip
+
+React 会确保`effect`每次运行时，DOM都已经更新完毕。
+
+:::
+
+### 清除 Effect
+
+组件的每次重新渲染effect都会执行，有一些情况里，两次effect执行会互相影响。**比如，在effect中设置了一个定时器**，总不能每次effect执行都设置一个新的定时器，所以我们需要在一个effect执行前，清除掉前一个effect所带来的影响。要实现这个功能，可以在effect中将一个函数作为返回值返回，像是这样：
+
+```js
+useEffect(() => {
+  // 副作用代码
+  return () => {
+    // 这个函数会在下一次effect执行栈中调用
+  }
+})
+```
+
+::: tip
+
+**effect返回的函数，会在下一次effect执行前调用，我们可以在这个函数中清除掉前一次effect执行所带来的影响。**
+
+:::
+
+### 限制 Effect
+
+组件每次渲染effect都会执行，这似乎并不总那么必要。因此在`useEffect()`中我们可以限制effect的执行时机，在`useEffect()`中可以将一个数组作为第二个参数传递，像是这样：
+
+```js
+useEffect(() => {
+  // 副作用代码
+  return () => {
+    // 这个函数会在下一次effect执行栈中调用
+  }
+  // 这里传入了两个变量 a b，设置后effect只有在变量a或者b发生变化时才会执行。
+}, [a, b])
+```
+
+::: tip
+
+**通过传入变量，可以限制`effect`的执行次数。如果直接传入一个空数组，则这个`effect`只会执行一次。**
+
+:::
 
