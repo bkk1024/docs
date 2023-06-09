@@ -1149,9 +1149,139 @@ export default ReducerTest
 
 :::
 
+## React.memo
 
+一般情况下，父组件的重新渲染会导致子组件也重新渲染，不论此时父组件的重新渲染是否影响到了子组件。这种子组件没有变化却要因为父组件的重新渲染而重新渲染的方式会额外造成性能损耗，因此 react 就给我们提供了一个高阶函数`React.memo()`。
 
+它可以用来根据组件的`props`对组件进行缓存，当一个组件的父组件发生重新渲染，而子组件的`props`没有发生变化时，它就会直接将缓存中的组件渲染结果返回，而不会再次触发子组件的重新渲染，这样一来就大大降低了子组件重新渲染的次数。
 
+使用如下：
+
+```jsx
+import React from "react"
+
+const MemoTest = (props) => {
+	console.log("重新渲染")
+	return <div>{props.count}</div>
+}
+
+export default React.memo(MemoTest)
+```
+
+::: tip
+
+`React.memo()`接收一个组件作为参数，并且会返回一个包装过的组件，包装过的新组件就会具有缓存功能。
+
+包装过后，只有父组件导致本组件的`props`发生变化后，才会触发组件的重新渲染，否则总是返回缓存中的结果。它不会影响`state`和`context`的变化。
+
+:::
+
+## useCallback()
+
+`useCallback()`是一个钩子函数，用来创建 react 中的回调函数。它创建的回调函数不会总在组件重新渲染时重新创建。
+
+它的使用类似`useEffect()`，需要传入一个函数和依赖数组：
+
+```jsx
+import React, {
+	useCallback,
+	useState,
+} from "react"
+
+const A = (props) => {
+	const [count, setCount] = useState(0)
+
+	const clickHandler = useCallback(() => {
+		setCount((prevState) => prevState + 1)
+	}, [])
+	return <div onClick={clickHandler}>{count}</div>
+}
+
+export default A
+```
+
+它返回的这个函数就当成普通函数进行使用即可。传入的这个依赖数组的作用与`useEffect()`一致，这里传入一个空数组则这个函数只会在初次渲染时才创建，此后重新渲染时都不会重新创建。
+
+## Strapi
+
+[Strapi – 李立超 | lilichao.com](https://www.lilichao.com/index.php/2022/05/16/strapi/)
+
+## useEffect 中使用 async/await
+
+你可能在想我就用如下代码不行吗：
+
+```js
+useEffect(async () => {
+  const res = await fetch("http://test.com/api")
+}, [])
+```
+
+实际上，这样是不行的，代码会报错：
+
+![image-20230609162007778](./react18.assets/image-20230609162007778.png)
+
+因此，**正确写法如下**：
+
+```js
+useEffect(() => {
+  async function fetchData() {
+    const res = await fetch("http://test.com/api")
+  }
+  fetchData()
+}, [])
+```
+
+## 自定义钩子
+
+react 中的钩子函数**只能在函数组件中或者自定义钩子中调用**，当我们需要<span style="color: orange">将 react 中钩子函数提取到一个公共区域时，就可以使用自定义钩子。<span/>
+
+自定义钩子其实就是一个普通函数，只是它的名字需要使用`use`开头，类似`useState`。
+
+```js
+import { useState, useCallback } from "react"
+
+const useFetch = (options, cb) => {
+  const { url, option, errMsg } = options
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(false)
+	const [error, setError] = useState(null)
+  
+  const fetchData = useCallback(async (data) => {
+    // 这里传入的 data 是调用这个钩子后返回的函数的参数
+		try {
+			// 设置为正在加载
+			setLoading(true)
+			// 重置上次的错误
+			setError(null)
+			const resp = await fetch(
+				`http://localhost:1337/api/${url}`,
+				{
+					method: option.method || "get",
+					headers: {
+						"Content-type": "application/json",
+					},
+					body: data ? JSON.stringify({ data }) : null,
+				}
+			)
+
+			if (resp.ok && resp.status === 200) {
+				const res = await resp.json()
+				setData(res.data)
+				cb && cb()
+			} else {
+				throw new Error(errMsg)
+			}
+			console.log(resp)
+		} catch (error) {
+			setError(error.message)
+		} finally {
+			setLoading(false)
+		}
+	}, [])
+
+	return { data, loading, error, fetchData }
+}
+```
 
 
 
