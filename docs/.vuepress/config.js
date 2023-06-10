@@ -101,6 +101,11 @@ export default defineUserConfig({
 								text: "pm2",
 								link: "/node/pm2",
 							},
+							{
+								text: "nodejs+express+history",
+								link:
+									"/node/nodejs和express配合前端history模式",
+							},
 						],
 					},
 					{
@@ -299,7 +304,12 @@ export default defineUserConfig({
 				{
 					text: "nodejs",
 					collapsible: true,
-					children: ["nvm", "nodejs", "pm2"],
+					children: [
+						"nvm",
+						"nodejs",
+						"pm2",
+						"nodejs和express配合前端history模式",
+					],
 				},
 				{
 					text: "nestjs",
