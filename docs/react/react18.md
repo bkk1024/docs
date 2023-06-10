@@ -1283,7 +1283,152 @@ const useFetch = (options, cb) => {
 }
 ```
 
+## Redux：状态容器
 
+`Redux`是一个专为 js 应用设计的可预期的状态容器，即它并不是只能在 react 中使用，在任何 js 应用中都可以（包括前端 js、服务器 nodejs）。
+
+`Redux`可以理解为`reducer`和`context`的结合体，它既可以管理复杂的`state`，也可以在不同组件间便捷的共享`state`。
+
+`Redux`一般应用于大型项目中。
+
+下面这个案例是简单使用`Redux`核心库在`index.html`中的简单应用。
+
+[Redux – 李立超 | lilichao.com](https://www.lilichao.com/index.php/2022/05/22/redux/)
+
+### RTK
+
+除了`Redux`核心库外，`Redux`还为我们提供了一种使用`Redux`的方法：`Redux Toolkit`，即`Redux`工具包。它可以简化`Redux`中的一些重复性操作。
+
+安装：`npm install react-redux @reduxjs/toolkit -S`
+
+1. 创建一个 store
+
+   ```js
+   /* store/index.js */
+   
+   import { configureStore } from "@reduxjs/toolkit"
+   // 这里引入的是拆分出去的 slice
+   import { studentReducer } from "./studentSlice"
+   
+   // 用来创建 store 对象，需要一个配置对象作为参数
+   const store = configureStore({
+     // 有多个 reducer 的时候就使用对象配置，如果只有一个则可以直接指定  
+   	reducer: {
+   		student: studentReducer,
+   	},
+   })
+   
+   export default store
+   ```
+
+2. 创建分片（slice）：
+
+   ```js
+   /* store/studentSlice.js */
+   
+   import { createSlice } from "@reduxjs/toolkit"
+   
+   // createSlice 用来创建 reducer 切片
+   // 它需要一个配置对象作为参数，通过对象的不同属性来指定它的配置
+   const stuSlice = createSlice({
+   	name: "stu", // 用来自动生成 action 中的 type
+   	initialState: {
+   		name: "孙悟空",
+   		age: 18,
+   		gender: "男",
+   		address: "花果山",
+   	}, // state 的初始值
+   	reducers: {
+   		setName(state, action) {
+   			// 可以通过不同的方法来指定对 state 的不同操作
+   			// 两个参数：
+   			//  - state：它是原本那个 state 的代理，可以直接修改
+   			//  - action：它还是原本的 action
+   			state.name = action.payload
+   		},
+   	}, // 用来指定 state的各种操作，可以直接在对象中添加方法
+   })
+   
+   // 切片对象会帮我们自动生成 actions
+   // 这个 actions 中保存的是 slice 自动生成的 action 创建器（函数），调用函数会自动创建 action 对象
+   // 这个 action 对象的结构：{type: name/函数名, payload: 函数的参数}
+   // console.log(stuSlice.actions)
+   // 导出修改 state 的方法
+   export const { setName } = stuSlice.actions
+   // 导出这个 slice 的 reducer
+   export const { reducer: studentReducer } =
+   	stuSlice
+   ```
+
+3. 在 react 组件中使用：
+
+   1. 首先在`index.js`文件中导入提供`store`的`Provider`组件：
+
+      ```jsx
+      /* src/index.js */
+      
+      // 引入 ReactDOM
+      import ReactDOM from "react-dom/client"
+      // 引入样式
+      import "./index.css"
+      import App from "./App"
+      // 导入 store
+      import store from "./store"
+      import { Provider } from "react-redux"
+      
+      // 获取根元素
+      const root = ReactDOM.createRoot(
+      	document.querySelector("#root")
+      )
+      root.render(
+      	<Provider store={store}>
+          {/* 在这里给后续每个子组件都提供这个 store */}
+      		<App />
+      	</Provider>
+      )
+      ```
+
+   2. 在要使用`store`的组件中导入相应的钩子函数和修改`store`的函数，并使用：
+
+      ```jsx
+      /* src/App.js */
+      
+      import React from "react"
+      import {
+      	useDispatch,
+      	useSelector,
+      } from "react-redux"
+      import { setName } from "./store/student"
+      
+      const App = () => {
+        // 这里返回的是对应的 state 数据
+      	const student = useSelector(
+      		(state) => state.student
+      	)
+      	// useDispatch 获取派发器对象，它用来调用对应的方法修改 state 数据
+      	const dispatch = useDispatch()
+      
+      	const setNameHandler = () => {
+      		// 以下两种dispatch写法效果都是一样的
+      		// dispatch({
+      		// 	type: "stu/setName",
+      		// 	payload: "猪八戒",
+      		// })
+      		dispatch(setName("猪八戒"))
+      	}
+      
+      	return (
+      		<div>
+      			<p>{JSON.stringify(student)}</p>
+      			<button onClick={setNameHandler}>
+      				修改name
+      			</button>
+      		</div>
+      	)
+      }
+      
+      export default App
+      ```
 
 
 
