@@ -1430,15 +1430,269 @@ const useFetch = (options, cb) => {
       export default App
       ```
 
+## RTK Query
 
+`RTKQ（RTK Query）`由 RTK 提供，用来帮助我们处理数据加载的问题。他是一个强大的数据获取和缓存工具，在它的帮助下，我们不再需要自己编写获取数据和缓存数据的逻辑。
 
+Web 应用中加载数据时需要处理的问题：
 
+1. 根据不同的加载状态娴熟不同的 UI 组件
+2. 减少对相同数据重复发送请求
+3. 使用乐观更新，提升用户体验
+4. 在用户与 UI 交互时，管理缓存的生命周期
 
+使用示例如下：
 
+1. 新建一个 api 文件，`studentApi.js`：
 
+   ```js
+   import {
+   	createApi,
+   	fetchBaseQuery,
+   } from "@reduxjs/toolkit/dist/query/react"
+   
+   // 创建 Api 对象
+   // createApi() 用来创建 RTKQ 中的 API 对象
+   // RTKQ 的所有功能都需要通过该对象来进行
+   // createApi() 需要一个对象作为参数
+   const studentApi = createApi({
+   	// api 的标识，不能和其他的 api 或 reducer 重复
+   	reducerPath: "studentApi",
+   	// 指定查询的基础信息
+   	baseQuery: fetchBaseQuery({
+   		baseUrl: "http://localhost:1337/api/",
+   	}),
+   	// 用来指定 api 中的标签类型
+   	tagTypes: ["student"],
+     // 用来指定 api 中的各种功能，是一个方法
+   	// 需要一个对象作为返回值
+   	endpoints: (build) => {
+       // build 是请求的构建器，通过 build 来设置请求的相关信息
+   		return {
+         // 查询所有信息
+   			getStudents: build.query({
+           // build.query() 表明这是一个查询方法
+   				query() {
+             // 用来指定请求子路径
+   					return "students"
+   				},
+   				transformResponse(data) {
+             // 用来转换响应数据的格式
+   					return data.data
+   				},
+   				// 设置数据缓存的时间，单位为秒，默认就是 60s
+   				keepUnusedDataFor: 60,
+           // 提供标识，来设置哪些缓存，哪些不缓存
+   				providesTags: ["student"],
+   			}),
+         // 删除某条数据
+   			deleteStudentById: build.mutation({
+   				query(id) {
+   					return {
+   						// 如果发送的不是 get 请求，需要返回与给对象来设置请求的信息
+   						url: `students/${id}`,
+   						method: "delete",
+   					}
+   				},
+   			}),
+         // 添加一条数据
+   			addStudent: build.mutation({
+   				query(stu) {
+   					return {
+   						url: "students",
+   						method: "post",
+               // body 里面的 data 就是要给 post 传递的数据
+   						body: {
+   							data: stu,
+   						},
+   					}
+   				},
+   				invalidatesTags: ["student"],
+   			}),
+   		}
+   	},
+   })
+   
+   // api 对象常见后，对象中会根据各种方法自动生成对应的钩子函数
+   // 通过这些钩子函数，可以向服务器发送请求
+   // 钩子函数的命名规则：getStudents -> useGetStudentsQuery()
+   export const {
+   	useGetStudentsQuery,
+   	useDeleteStudentByIdMutation,
+   	useAddStudentMutation,
+   } = studentApi
+   export default studentApi
+   
+   ```
 
+2. 在`index.js`文件中创建并引入
 
+   ```js
+   import { configureStore } from "@reduxjs/toolkit"
+   import studentApi from "./studentApi.js"
+   import { setupListeners } from "@reduxjs/toolkit/dist/query/index.js"
+   
+   const store = configureStore({
+   	reducer: {
+       // 这里表示将这个 api 配置到这个 store 中
+   		[studentApi.reducerPath]: studentApi.reducer,
+   	},
+     // 这里表示将 api 自动生成的中间件添加到 store 的中间件中
+   	middleware: (getDefaultMiddleware) =>
+   		getDefaultMiddleware().concat(
+   			studentApi.middleware
+   		),
+   })
+   
+   // 设置以后，将会支持 refetchOnFocus 和 refetchOnReconnect
+   setupListeners(store.dispatch)
+   
+   export default store
+   ```
 
+3. 在组件中使用
+
+   1. 首先想 RTK 一样，在`index.js`文件中提供 store
+
+      ```jsx
+      import ReactDOM from "react-dom/client"
+      // 引入样式
+      import "./index.css"
+      // 引入 App 组件
+      import App from "./App"
+      import store from "./store"
+      import { Provider } from "react-redux"
+      
+      // 获取根元素
+      const root = ReactDOM.createRoot(
+      	document.querySelector("#root")
+      )
+      root.render(
+      	<Provider store={store}>
+      		<App />
+      	</Provider>
+      )
+      ```
+
+   2. 在后续子组件中使用：
+
+      ```jsx
+      import React from "react"
+      import StudentList from "./StudentList"
+      import StuContext from "./store/StudentContext"
+      import { useGetStudentsQuery } from "./store/studentApi"
+      
+      const AppFetch = () => {
+      	const {
+      		data: stus,
+      		isLoading,
+      		isError,
+      		isSuccess,
+      		refetch,
+      	} = useGetStudentsQuery()
+        
+        const loadDataHandler = () => {
+      		refetch()
+      	}
+        
+        return (
+      		<StuContext.Provider
+      			value={{ refreshData: loadDataHandler }}
+      		>
+      			<div>
+      				<button onClick={loadDataHandler}>
+      					加载数据
+      				</button>
+      				{isSuccess && <StudentList stus={stus} />}
+      				{isLoading && <p>数据正在加载中...</p>}
+      				{isError && <p>数据加载失败！</p>}
+      			</div>
+      		</StuContext.Provider>
+      	)
+      }
+      
+      export default AppFetch
+      ```
+
+::: details 其他细节
+
+1. 查询方法返回的一些数据，信息如下：
+
+   ```jsx
+   /**
+   	 * refetch: 是一个函数，用来重新加载数据，不会使用缓存数据
+   	 * status: 字符串，表示请求的状态
+   	 * isFetching: 布尔值，表示数据是否在加载
+   	 * isLoading: 布尔值，表示数据是否第一次加载
+   	 * isSuccess: 布尔值，表示请求是否成功
+   	 * isUninitialized: 布尔值，表示请求是否还没有开始发送
+   	 * isError: 布尔值，表示是否错误
+   	 * error: Error()对象，有错误是才显示
+   	 * data: 最新的数据
+   	 * currentData: 当前参数的最新数据，当传递的参数发生变化时，它会变成 undefined
+   	 */
+   	const {
+   		data: stus,
+   		isLoading,
+   		isError,
+   		isSuccess,
+   		refetch,
+   	} = useGetStudentsQuery()
+   ```
+
+2. 使用接口钩子时，可以做一些配置如下：
+
+   ```jsx
+   const result = useGetStudentsQuery(null, {
+     // useQuery 可以接收一个对象作为第二个参数，通过该对象可以对请求进行配置
+   	// 用来指定 useQuery 返回的结果
+   	selectFromResult: (result) => {
+   		// if (result.data) {
+   		// 	result.data = result.data.filter(
+   		// 		(item) => item.attributes.age < 18
+   		// 	)
+   		// }
+   		return result
+   	},
+   	// 设置轮询的间隔，单位为毫秒，如果为0就表示不轮询
+   	pollingInterval: 0,
+   	// 设置是否跳过当前请求，默认为 false
+   	skip: false,
+   	// 设置是否每次都重新加载数据，false 正常使用缓存，true 每次都重载数据，数字表示数据缓存的时间
+   	refetchOnMountOrArgChange: false,
+   	// 是否在重新获取焦点时重载数据，需要在 store 中添加：setupListeners(store.dispatch)
+   	refetchOnFocus: false,
+   	// 表示网络重连后是否重载数据，需要在 store 中添加：setupListeners(store.dispatch)
+   	refetchOnReconnect: false,
+   })
+   ```
+
+3. 除了查询方法外，添加、修改、删除方法都会返回一个数组：
+
+   ```jsx
+   // 它返回的是一个数组，第一个是操作的触发器，第二个是一个结果集
+   // 这个 result 是一个对象，里面包含的数据和查询方法直接返回的一样
+   const [delStudent, result] = useDeleteStudentByIdMutation()
+   
+   const deleteHandler = async () => {
+     // 这里传入的 id 就是配置接口时需要传入的参数
+   	await delStudent(props.id)
+   }
+   ```
+
+:::
+
+::: warning
+
+虽然使用`RTKQ`封装接口，它会帮我们缓存数据，且会直接直接将一些状态返回给我们，也可以让我们配置类似是否要轮询这个接口等的操作，但是总体来说感觉学习成本偏高，有着许多它自己的 api 和配置要学习，并且配置每个 api 时也非常的难受，嵌套的层级也很高，因此总是觉得有点得不偿失。
+
+:::
+
+## react query
+
+功能与`RTKQ`类似，但是更加简洁。
+
+这个等后续再添加内容。
 
 
 
