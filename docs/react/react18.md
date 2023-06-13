@@ -1696,7 +1696,325 @@ Web 应用中加载数据时需要处理的问题：
 
 [react-query手把手教程 - 修仙大橙子的专栏 - 掘金 (juejin.cn)](https://juejin.cn/column/7105422212789714980)
 
+## Router
 
+### 版本5
+
+安装：
+
+`npm install react-router-dom@5 -S`
+
+#### 声明式路由
+
+使用：
+
+1. 在`index.js`中引入`BrowserRouter`并使用此组件
+
+   ```jsx
+   import React from "react"
+   import ReactDOM from "react-dom/client"
+   import "./index.css"
+   import App from "./App"
+   import { BrowserRouter as Router } from "react-router-dom"
+   
+   const root = ReactDOM.createRoot(
+   	document.getElementById("root")
+   )
+   root.render(
+   	<Router>
+   		<App />
+   	</Router>
+   )
+   ```
+
+   ::: tip
+
+   这里的`Router`组件有两种：
+
+   1. `BrowserRouter`：history 模式
+   2. `HashRouter`：hash 模式
+
+   :::
+
+2. 在后续子组件中使用`Route`类设置路由
+
+   ```jsx
+   import "./App.css"
+   import { Route } from "react-router-dom"
+   import Home from "./views/Home/Home"
+   import About from "./views/About/About"
+   
+   function App() {
+   	return (
+   		<div className="App">
+   			{/* 将路由和组件进行映射
+               path：路径
+               component：该路径下挂载的组件
+               exact：路径是否完整匹配，默认值为false  
+               render：功能跟 component 类似，但是它更加灵活，它传递的是一个 jsx，因此它可以手动传递 props 参数。但是，使用 render 后，Route 不会自动帮我们传递 history、location 和 match 参数。
+         */}
+   			<Route path="/" component={Home} exact />
+   			<Route path="/about" component={About} exact />
+   		</div>
+   	)
+   }
+   
+   export default App
+   ```
+
+   ::: tip
+
+   当Route的路径被访问，其对应的组件就会自动挂载。
+
+   `component`用来指定路由匹配后被挂载的组件，它需要直接传递组件的类。通过`component`构建的组件，它会自动创建组件并传递参数（在组件的`props`中访问 ）：
+
+   - `history`：地址记录的信息，控制页面的跳转
+
+     - push()：跳转路由，可以理解为从一个盒子跳到另一个盒子
+     - replace()：替换页面，它并不是跳转了路由，而是用一个别的路由替换了当前的路由，可以理解为盒子没变，但是盒子里的内容变了
+
+   - `location`：地址信息
+
+     - hash：url 后面以`#`开头的内容
+     - pathname
+     - search：url 后面以`?`开头的查询字符串
+     - state：编程式路由通过 state 传递的数据
+
+   - `match`：匹配的信息
+
+     - isExcat：路径是否完全匹配
+
+     - params：传递的路由参数
+
+       ```jsx
+       // 设置路由参数
+       <Route path="/student/:id" component={Student}/>
+       
+       // 获取路由参数
+       const Student = (props) => {
+         return (
+         	<div>{props.params.id}</div>
+         )
+       }
+       ```
+
+     - path：我们设置的路径
+
+     - url：匹配到的路径
+
+   :::
+
+   ::: warning
+
+   默认情况下Route并不是严格匹配，只要url地址的头部和path一致，组件就会挂载。
+
+   使用`exact`可以开启严格匹配模式，默认值为 false。
+
+   :::
+
+3. 使用`Link`或者`NavLink`组件创建超链接
+
+   ```jsx
+   import React from "react"
+   import { Link, NavLink } from "react-router-dom"
+   
+   const Menu = () => {
+   	return (
+   		<div>
+   			<ul>
+   				<li>
+   					{/* 使用Link组件创建超链接 */}
+   					{/* <Link to="/">Home</Link> */}
+   					{/* 使用NavLink组件创建超链接，只不过NavLink可以指定超链接激活后的样式，有两个属性：
+               activeClassname：写法跟 className 相似
+               activeStyle：写法跟 style 相似
+             */}
+   					<NavLink to="/">Home</NavLink>
+   				</li>
+   				<li>
+   					{/* <Link to="/about">About</Link> */}
+   					<NavLink to="/about">About</NavLink>
+   				</li>
+   			</ul>
+   		</div>
+   	)
+   }
+   
+   export default Menu
+   ```
+
+路由嵌套：
+
+1. 方式一：
+
+   ```jsx
+   // 设置路由
+   <Route path="/student">
+   	<Student/>
+     <Route path="/student/about">
+     	<About/>	
+     </Route>
+   </Route>
+   ```
+
+2. 方式二：
+
+   ```jsx
+   // 设置路由
+   <Route path="/student" component={Student}/>
+   
+   // 获取路由参数
+   const Student = (props) => {
+     return (
+     	<div>student</div>
+       
+       <Route path={`${props.match.path}/about`} component={About} />
+     )
+   }
+   ```
+
+
+
+#### 编程式路由
+
+
+
+#### Prompt 组件
+
+用户跳转路由前弹出的 alert ，判断用户是否真的要跳转路由。
+
+```jsx
+<Prompt when={isPrompt} message={"将要离开页面，确认吗？"} />
+```
+
+#### Redirect 组件
+
+重定向组件，用于跳转页面。
+
+```jsx
+<Redirect to={"/login"} />
+```
+
+#### Switch 组件
+
+将 Route 统一放到一个 Switch 中，一个 Switch 中只会有一个路由显示。
+
+```jsx
+<Switch>
+	<Route path="/" component={Home} />
+  <Route path="/about" component={About} />
+  <Route path="/form" component={Form} />
+</Switch>
+```
+
+### 版本6
+
+安装：
+
+`npm install react-router-dom@6 -S`
+
+#### 声明式路由
+
+使用：
+
+1. `Router`组件的使用，版本6和版本5式没有区别的
+
+   ```jsx
+   import React from "react"
+   import ReactDOM from "react-dom/client"
+   import "./index.css"
+   import App from "./App"
+   import { BrowserRouter as Router } from "react-router-dom"
+   
+   const root = ReactDOM.createRoot(
+   	document.getElementById("root")
+   )
+   root.render(
+   	<Router>
+   		<App />
+   	</Router>
+   )
+   ```
+
+2. 在后续子组件中使用`Route`类设置路由，这里就有所不同，在版本6中，所有的`Route`组件都需要被`Routes`组件给包裹起来
+
+   ```jsx
+   import { Route, Routes } from "react-router-dom"
+   import "./App.css"
+   import Home from "./views/Home/Home"
+   import About from "./views/About/About"
+   
+   function App(props) {
+   	return (
+   		<div className="App">
+   			<h1>App</h1>
+   			<Routes>
+   				<Route path="/" element={<Home />} />
+   				<Route path="/about" element={<About />} />
+   			</Routes>
+   		</div>
+   	)
+   }
+   
+   export default App
+   ```
+
+   ::: tip
+
+   1. `Routes`功能跟`Switch`相似，但是它必须写上。
+   2. `Route`组件中的`component、render、children`没有了，版本6中改为`element={<组件/>}`
+
+   :::
+
+3. 使用`Link`或者`NavLink`组件创建超链接，这个没有什么区别
+
+   ```jsx
+   import React from "react"
+   import { Link, NavLink } from "react-router-dom"
+   
+   const Menu = () => {
+   	return (
+   		<div>
+   			<ul>
+   				<li>
+   					<Link to="/">Home</Link>
+   					{/* <NavLink to="/">Home</NavLink> */}
+   				</li>
+   				<li>
+   					<Link to="/about">About</Link>
+   					{/* <NavLink to="/about">About</NavLink> */}
+   				</li>
+   			</ul>
+   		</div>
+   	)
+   }
+   
+   export default Menu
+   ```
+
+4. 路由参数传递和获取
+
+   ```jsx
+   <Routes>
+   	<Route path="/student/:id" element={<Student />} />
+   </Routes>
+   
+   const Student = () => {
+     // 使用钩子获取的方式没变化
+     const params = useParams()
+     const location = useLocation() // 获取当前地址信息
+     const match = useMatch("/student") // 用来判断路径是否匹配当前路径，不匹配返回 null
+     const nav = useNavigate() // 获取一个用于跳转页面的函数，功能类似版本5的 history.push()，使用 nav(路径, {replace: true}) 转换为 replace 模式
+     
+     return (
+     	<div>
+       	<p>{params.id}</p>
+       </div>
+     )
+   }
+   ```
+
+   
 
 
 
