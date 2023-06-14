@@ -1698,17 +1698,27 @@ Web 应用中加载数据时需要处理的问题：
 
 ## Router
 
-### 版本5
+### 安装 router
 
-安装：
+::: code-tabs
 
-`npm install react-router-dom@5 -S`
+@tab 版本5
 
-#### 声明式路由
+```sh
+npm install react-router-dom@5 -S
+```
 
-使用：
+@tab 版本6
 
-1. 在`index.js`中引入`BrowserRouter`并使用此组件
+```sh
+npm install react-router-dom@6 -S
+```
+
+:::
+
+### 使用 router
+
+1. 在`index.js`中使用`BrowserRouter | HashRouter`组件，这一步版本5和6没有区别
 
    ```jsx
    import React from "react"
@@ -1736,7 +1746,11 @@ Web 应用中加载数据时需要处理的问题：
 
    :::
 
-2. 在后续子组件中使用`Route`类设置路由
+2. 在被`Router`包裹的后续子组件中即可使用`Route`来设置具体的路由
+
+   ::: code-tabs
+
+   @tab 版本5
 
    ```jsx
    import "./App.css"
@@ -1762,57 +1776,71 @@ Web 应用中加载数据时需要处理的问题：
    export default App
    ```
 
+   
+
+   @tab 版本6
+
+   ```jsx
+   import { Route, Routes } from "react-router-dom"
+   import "./App.css"
+   import Home from "./views/Home/Home"
+   import About from "./views/About/About"
+   
+   function App(props) {
+   	return (
+   		<div className="App">
+   			<h1>App</h1>
+   			<Routes>
+   				<Route path="/" element={<Home />} />
+   				<Route path="/about" element={<About />} />
+   			</Routes>
+   		</div>
+   	)
+   }
+   
+   export default App
+   ```
+
+   :::
+
    ::: tip
 
-   当Route的路径被访问，其对应的组件就会自动挂载。
+   在这一步中，版本5和6就有所区别：
 
-   `component`用来指定路由匹配后被挂载的组件，它需要直接传递组件的类。通过`component`构建的组件，它会自动创建组件并传递参数（在组件的`props`中访问 ）：
+   1. 版本6中的`Route`需要被统一包裹在`Routes`组件中，这个`Routes`的功能很像版本5中的`Switch`组件。
 
-   - `history`：地址记录的信息，控制页面的跳转
+   2. 在版本6中，`Route`组件中的`component、render、children`没有了，版本6中改为`element={<组件/>}`。
 
-     - push()：跳转路由，可以理解为从一个盒子跳到另一个盒子
-     - replace()：替换页面，它并不是跳转了路由，而是用一个别的路由替换了当前的路由，可以理解为盒子没变，但是盒子里的内容变了
+   3. 版本6中，`Route`组件中不能嵌套当前的路由要渲染的组件，它嵌套的应该是另一个`Route`，如下：
 
-   - `location`：地址信息
-
-     - hash：url 后面以`#`开头的内容
-     - pathname
-     - search：url 后面以`?`开头的查询字符串
-     - state：编程式路由通过 state 传递的数据
-
-   - `match`：匹配的信息
-
-     - isExcat：路径是否完全匹配
-
-     - params：传递的路由参数
-
-       ```jsx
-       // 设置路由参数
-       <Route path="/student/:id" component={Student}/>
-       
-       // 获取路由参数
-       const Student = (props) => {
-         return (
-         	<div>{props.params.id}</div>
-         )
-       }
-       ```
-
-     - path：我们设置的路径
-
-     - url：匹配到的路径
+      ```jsx
+      <Routes>
+        {/* 这样的写法是错误的 */}
+      	<Route path="about">
+        	<About />
+        </Route>
+        {/* 这种写法是正确的，这里表示在 about 路由中嵌套了 student 子路由*/}
+        <Route path="about" element={<About />}>
+        	<Route path="student" element={<Student />} />
+        </Route>
+      </Routes>
+      ```
 
    :::
 
    ::: warning
 
-   默认情况下Route并不是严格匹配，只要url地址的头部和path一致，组件就会挂载。
+   在版本5中，默认情况下Route并不是严格匹配，只要url地址的头部和path一致，组件就会挂载。使用`exact`可以开启严格匹配模式，默认值为 false。
 
-   使用`exact`可以开启严格匹配模式，默认值为 false。
+   在版本6中，默认情况下Route就是严格匹配，如果不想要严格匹配，可以在路由路径后加上`/*`，如`<Route path="/about/*" element={<About />} />`
 
    :::
 
-3. 使用`Link`或者`NavLink`组件创建超链接
+3. 使用`Link`或者`NavLink`组件创建超链接，这一步中版本5和6没什么区别
+
+   ::: code-tabs
+
+   @tab 版本5
 
    ```jsx
    import React from "react"
@@ -1843,41 +1871,281 @@ Web 应用中加载数据时需要处理的问题：
    export default Menu
    ```
 
-路由嵌套：
-
-1. 方式一：
-
-   ```jsx
-   // 设置路由
-   <Route path="/student">
-   	<Student/>
-     <Route path="/student/about">
-     	<About/>	
-     </Route>
-   </Route>
-   ```
-
-2. 方式二：
-
-   ```jsx
-   // 设置路由
-   <Route path="/student" component={Student}/>
    
-   // 获取路由参数
-   const Student = (props) => {
-     return (
-     	<div>student</div>
-       
-       <Route path={`${props.match.path}/about`} component={About} />
-     )
+
+   @tab 版本6
+
+   ```jsx
+   import React from "react"
+   import { Link, NavLink } from "react-router-dom"
+   
+   const Menu = () => {
+   	return (
+   		<div>
+   			<ul>
+   				<li>
+   					<Link to="/">Home</Link>
+             {/* NavLink 设置样式和类名的方式与版本5有所区别，className 的设置方式跟这个 style 是一样的，只不过返回值为 class 类名 */}
+   					{/* 
+   							<NavLink
+     							to="/" 
+     							style={({isActive}) => {
+       							return isActive ? {color: "red"} : null
+     							}} >Home</NavLink> 
+     				*/}
+   				</li>
+   				<li>
+   					<Link to="/about">About</Link>
+   					{/* <NavLink to="/about">About</NavLink> */}
+   				</li>
+   			</ul>
+   		</div>
+   	)
    }
+   
+   export default Menu
    ```
 
+   
+
+   :::
+
+### 路由嵌套
+
+:::: code-tabs
+
+@tab 版本5 方式一
+
+```jsx
+{/* 这种方式是直接在 Route 路由中设置嵌套 */}
+
+<Route path="/student">
+	<Student/>
+  <Route path="/student/about">
+  	<About/>	
+  </Route>
+</Route>
+```
 
 
-#### 编程式路由
+
+@tab 版本5 方式二
+
+```jsx
+{/* 这种方式是在相关组件中设置要嵌套进来的路由 */}
+
+// 设置路由
+<Route path="/student" component={Student}/>
+
+// 获取路由参数
+const Student = (props) => {
+  return (
+  	<div>student</div>
+    
+    <Route path={`${props.match.path}/about`} component={About} />
+  )
+}
+```
 
 
+
+@tab 版本6 方式一
+
+```jsx
+/** 
+		嵌套路由方式一：缺点是如果嵌套层次过多不好维护
+*/
+<Routes>
+	<Route path="/" element={<Home />} />
+  {/* 这里表示只要是以/about/开头的路由，都匹配到 */}
+	<Route path="/about/*" element={<About />} />
+</Routes>
+
+const About = (props) => {
+	return (
+		<div>
+			<h2>关于我们</h2>
+			<p>孙悟空</p>
+			<p>猪八戒</p>
+			<p>沙和尚</p>
+      
+      {/* 这里嵌套/about/路由下的子路由，这种写法如果嵌套太多了，就不太好维护，因此推荐另一种形式 */}
+			<Routes>
+				<Route path="hello" element={<Hello />} />
+			</Routes>
+		</div>
+	)
+}
+
+```
+
+
+
+@tab 版本6 方式二
+
+```jsx
+/** 
+		嵌套路由方式二：需要使用一个新的组件 Outlet
+*/
+<Routes>
+	<Route path="/" element={<Home />} />
+  <Route path="about" element={<About />} >
+  	{/* 使用嵌套 Route 形式 */}
+    <Route path="hello" element={<Hello />} />
+  </Route>
+</Routes>
+
+const About = (props) => {
+	return (
+		<div>
+			<h2>关于我们</h2>
+			<p>孙悟空</p>
+			<p>猪八戒</p>
+			<p>沙和尚</p>
+      
+      {/* Outlet 用来表示嵌套路由中的组件，当嵌套路由中的路径匹配成功了，Outlet 则显示此组件，否则为空 */}
+			<Outlet />
+		</div>
+	)
+}
+
+```
+
+::::
+
+### 路由参数
+
+::: code-tabs
+
+@tab 版本5 方式一
+
+```jsx
+{/* 
+当使用 Route 中的 component 指定当前路由挂载的组件后，被挂载的组件的 props 会自动的被传入三个参数：
+	1、history：地址记录的信息，控制页面的跳转
+	2、location：地址信息
+	3、match：当前路由匹配的信息
+*/}
+
+// 设置路由参数
+<Route path="/student/:id" component={Student}/>
+
+// 获取路由参数
+const Student = (props) => {
+  return (
+  	<div>{props.params.id}</div>
+  )
+}
+```
+
+
+
+@tab 版本5 方式二
+
+```jsx
+{/* 
+在 Route 中如果使用非 component 属性渲染组件，则 props 不会被传入方式一中提到的三个参数，这种时候就可以使用相关钩子函数：
+	1、useHistory
+	2、useLocation
+	3、useRouteMatch
+	4、useParams：这个可以直接获取参数
+*/}
+
+import React from "react"
+import {useHistory, useLocation, useParams, useRouteMatch} from "react-router-dom"
+
+const About = (props) => {
+	// console.log(props)
+	console.log("history", useHistory())
+	console.log("match", useRouteMatch())
+	console.log("location", useLocation())
+	console.log("params", useParams())
+
+	return (
+		<div>about</div>
+	)
+}
+
+export default About
+```
+
+
+
+@tab 版本6
+
+```jsx
+{/* 在版本6中，直接使用相应的钩子获取参数即可，只不过某些钩子有些许不同 */}
+
+<Routes>
+	<Route path="/student/:id" element={<Student />} />
+</Routes>
+
+const Student = () => {
+  // 使用钩子获取的方式没变化
+  const params = useParams()
+  // 获取当前地址信息
+  const location = useLocation() 
+  // 用来判断路径是否匹配当前路径，不匹配返回 null
+  const match = useMatch("/student") 
+  // 获取一个用于跳转页面的函数，功能类似版本5的 history.push()，使用 nav(路径, {replace: true}) 转换为 replace 模式
+  const nav = useNavigate() 
+  
+  return (
+  	<div>
+    	<p>{params.id}</p>
+    </div>
+  )
+}
+```
+
+:::
+
+::: details 组件中的一些路由参数的相关信息
+
+- `history`：地址记录的信息，控制页面的跳转
+
+  - push()：跳转路由，可以理解为从一个盒子跳到另一个盒子
+  - replace()：替换页面，它并不是跳转了路由，而是用一个别的路由替换了当前的路由，可以理解为盒子没变，但是盒子里的内容变了
+
+- `location`：地址信息
+
+  - hash：url 后面以`#`开头的内容
+  - pathname
+  - search：url 后面以`?`开头的查询字符串
+  - state：编程式路由通过 state 传递的数据
+
+- `match`：匹配的信息
+
+  - isExcat：路径是否完全匹配
+
+  - params：传递的路由参数
+
+    ```jsx
+    // 设置路由参数
+    <Route path="/student/:id" component={Student}/>
+    
+    // 获取路由参数
+    const Student = (props) => {
+      return (
+      	<div>{props.params.id}</div>
+      )
+    }
+    ```
+
+  - path：我们设置的路径
+
+  - url：匹配到的路径
+
+:::
+
+### 路由跳转
+
+1. 声明式跳转：版本5和6中均可使用`Link`和`NavLink`组件进行跳转。
+2. 编程式跳转：
+   - 版本5中可以使用`props`传递的`history`参数中的`push | replace`实现，也可以使用`useHistory`钩子创建`history`，然后再使用其中的方法跳转
+   - 版本6中可以使用`useNavigate`钩子创建一个方法，比如叫`nav`，则可以使用`nav(路径)`来跳转，它默认是 push 模式
+
+### 版本5其他组件
 
 #### Prompt 组件
 
@@ -1907,114 +2175,17 @@ Web 应用中加载数据时需要处理的问题：
 </Switch>
 ```
 
-### 版本6
+### 版本6其他组件
 
-安装：
+#### Navigate 组件
 
-`npm install react-router-dom@6 -S`
+用来跳转到指定的位置，默认使用 push 模式跳转，给它添加 replace 属性可以转换为 replace 模式。
 
-#### 声明式路由
+```jsx
+<Navigate to="/student/1" replace />
+```
 
-使用：
 
-1. `Router`组件的使用，版本6和版本5式没有区别的
-
-   ```jsx
-   import React from "react"
-   import ReactDOM from "react-dom/client"
-   import "./index.css"
-   import App from "./App"
-   import { BrowserRouter as Router } from "react-router-dom"
-   
-   const root = ReactDOM.createRoot(
-   	document.getElementById("root")
-   )
-   root.render(
-   	<Router>
-   		<App />
-   	</Router>
-   )
-   ```
-
-2. 在后续子组件中使用`Route`类设置路由，这里就有所不同，在版本6中，所有的`Route`组件都需要被`Routes`组件给包裹起来
-
-   ```jsx
-   import { Route, Routes } from "react-router-dom"
-   import "./App.css"
-   import Home from "./views/Home/Home"
-   import About from "./views/About/About"
-   
-   function App(props) {
-   	return (
-   		<div className="App">
-   			<h1>App</h1>
-   			<Routes>
-   				<Route path="/" element={<Home />} />
-   				<Route path="/about" element={<About />} />
-   			</Routes>
-   		</div>
-   	)
-   }
-   
-   export default App
-   ```
-
-   ::: tip
-
-   1. `Routes`功能跟`Switch`相似，但是它必须写上。
-   2. `Route`组件中的`component、render、children`没有了，版本6中改为`element={<组件/>}`
-
-   :::
-
-3. 使用`Link`或者`NavLink`组件创建超链接，这个没有什么区别
-
-   ```jsx
-   import React from "react"
-   import { Link, NavLink } from "react-router-dom"
-   
-   const Menu = () => {
-   	return (
-   		<div>
-   			<ul>
-   				<li>
-   					<Link to="/">Home</Link>
-   					{/* <NavLink to="/">Home</NavLink> */}
-   				</li>
-   				<li>
-   					<Link to="/about">About</Link>
-   					{/* <NavLink to="/about">About</NavLink> */}
-   				</li>
-   			</ul>
-   		</div>
-   	)
-   }
-   
-   export default Menu
-   ```
-
-4. 路由参数传递和获取
-
-   ```jsx
-   <Routes>
-   	<Route path="/student/:id" element={<Student />} />
-   </Routes>
-   
-   const Student = () => {
-     // 使用钩子获取的方式没变化
-     const params = useParams()
-     const location = useLocation() // 获取当前地址信息
-     const match = useMatch("/student") // 用来判断路径是否匹配当前路径，不匹配返回 null
-     const nav = useNavigate() // 获取一个用于跳转页面的函数，功能类似版本5的 history.push()，使用 nav(路径, {replace: true}) 转换为 replace 模式
-     
-     return (
-     	<div>
-       	<p>{params.id}</p>
-       </div>
-     )
-   }
-   ```
-
-   
 
 
 
