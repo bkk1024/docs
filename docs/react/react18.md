@@ -1062,6 +1062,14 @@ useEffect(() => {
 
 :::
 
+## useLayoutEffect 和 useInsertionEffect
+
+useLayoutEffect的方法签名和useEffect一样，功能也类似。不同点在于，useLayoutEffect的执行时机要早于useEffect，它会在DOM改变后调用。在老版本的React中它和useEffect的区别比较好演示，React18中，useEffect的运行方式有所变化，所以二者区别不好演示。
+
+useLayoutEffect使用场景不多，实际开发中，在effect中需要修改元素样式，且使用useEffect会出现闪烁现象时可以使用useLayoutEffect进行替换。
+
+![image-20230615171601191](./react18.assets/image-20230615171601191.png)
+
 ## Reducer：useReducer()
 
 在 react 的函数组件中，我们可以通过`useState()`来创建 state，这种方式也存在一些不足，因为所有修改 state 的方法都必须通过`setState()`来进行，那么当遇到一些复杂度比较高的 state 时，这种方式似乎就不太优雅。
@@ -1201,6 +1209,24 @@ export default A
 ```
 
 它返回的这个函数就当成普通函数进行使用即可。传入的这个依赖数组的作用与`useEffect()`一致，这里传入一个空数组则这个函数只会在初次渲染时才创建，此后重新渲染时都不会重新创建。
+
+## useMemo()
+
+`useMemo`和`useCallback`用法和写法都十分相似，只是`useCallback`用来缓存函数，它会返回一个函数，而`useMemo`用来**缓存函数的执行结果**，它返回的是函数的执行结果。
+
+它用来缓存那些执行速度比较慢的函数的执行结果。
+
+```js
+const result = useMemo(()=>{
+    return 复杂逻辑函数();
+}, [依赖项])
+```
+
+::: tip
+
+`useMemo`中的函数会在依赖项发生变化时执行，如果依赖项没有变化，则返回的是上一次的执行结果，不执行函数，这样就避免复杂逻辑重复执行，每次都需要等待很久。
+
+:::
 
 ## Strapi
 
@@ -1461,6 +1487,13 @@ Web 应用中加载数据时需要处理的问题：
    	// 指定查询的基础信息
    	baseQuery: fetchBaseQuery({
    		baseUrl: "http://localhost:1337/api/",
+       // prepareHeaders: (headers) => {
+       // 获取token，这里是在 RTK 中设置了 token 字段，所以才能直接获取
+   		//	const token = getState().auth.token
+   		// 	// 统一设置请求头
+   		// 	headers.set("Authorization", "Bearer " + token)
+   		// 	return headers
+   		// },
    	}),
    	// 用来指定 api 中的标签类型
    	tagTypes: ["student"],
