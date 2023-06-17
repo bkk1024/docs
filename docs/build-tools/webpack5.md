@@ -133,7 +133,7 @@
   			{
   				test: /\.(png|jpe?g|gif|webp|svg)$/,
   				type: "asset",
-  				paeser: {
+  				parser: {
   					dataUrlCondition: {
   						maxSize: 10 * 1024, // 10kb 以内的图片文件，会转换为 base64
   					},
@@ -679,7 +679,7 @@ SourceMap 会生成一个编译后的代码和源代码的一个映射文件（x
   ```js
   module.exports = {
       mode: 'production',
-      devtool; 'source-map'
+      devtool: 'source-map'
   }
   ```
 
