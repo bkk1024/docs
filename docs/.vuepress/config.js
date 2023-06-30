@@ -14,18 +14,12 @@ export default defineUserConfig({
 	// 描述
 	description: "二师弟的学习笔记",
 	// 这是往 index.html 文件的头部添加的内容，我这里添加了网站的图标，也就是存放在 public 中的 icon 图片
-	head: [
-		[
-			"link",
-			{ rel: "icon", href: "/docs/icon.png" },
-		],
-	],
+	head: [["link", { rel: "icon", href: "/docs/icon.png" }]],
 	// 这里使用的是vuepress-theme-hope主题
 	theme: hopeTheme({
 		// 这是侧边栏标题的图标
 		logo: "/icon.png",
-		iconAssets:
-			"//at.alicdn.com/t/c/font_3944650_g8izyh3dwek.css",
+		iconAssets: "//at.alicdn.com/t/c/font_3944650_g8izyh3dwek.css",
 		// 顶部导航栏
 		navbar: [
 			{
@@ -103,8 +97,7 @@ export default defineUserConfig({
 							},
 							{
 								text: "nodejs+express+history",
-								link:
-									"/node/nodejs和express配合前端history模式",
+								link: "/node/nodejs和express配合前端history模式",
 							},
 						],
 					},
@@ -203,6 +196,19 @@ export default defineUserConfig({
 								text: "react18学习笔记",
 								link: "/react/react18.md",
 							},
+							{
+								text: "react使用svg",
+								link: "/react/react使用svg.md",
+							},
+						],
+					},
+					{
+						text: "其他",
+						children: [
+							{
+								text: "craco",
+								link: "/react/craco.md",
+							},
 						],
 					},
 				],
@@ -268,24 +274,14 @@ export default defineUserConfig({
 				{
 					text: "typescript相关文件",
 					collapsible: true,
-					children: [
-						"tsconfig.json配置",
-						"声明文件d.ts",
-					],
+					children: ["tsconfig.json配置", "声明文件d.ts"],
 				},
 			],
 			"/python/": [
 				{
 					text: "python爬虫相关",
 					collapsible: true,
-					children: [
-						"selenium",
-						"FastAPI",
-						"excel",
-						"日志模块",
-						"mongoDB",
-						"并发编程",
-					],
+					children: ["selenium", "FastAPI", "excel", "日志模块", "mongoDB", "并发编程"],
 				},
 			],
 			"/build-tools/": [
@@ -304,12 +300,7 @@ export default defineUserConfig({
 				{
 					text: "nodejs",
 					collapsible: true,
-					children: [
-						"nvm",
-						"nodejs",
-						"pm2",
-						"nodejs和express配合前端history模式",
-					],
+					children: ["nvm", "nodejs", "pm2", "nodejs和express配合前端history模式"],
 				},
 				{
 					text: "nestjs",
@@ -321,12 +312,7 @@ export default defineUserConfig({
 				{
 					text: "Vue3",
 					collapsible: true,
-					children: [
-						"vue3学习笔记",
-						"vue3其他笔记",
-						"vue常见优化手段",
-						"Vue.js设计与实现",
-					],
+					children: ["vue3学习笔记", "vue3其他笔记", "vue常见优化手段", "Vue.js设计与实现"],
 				},
 				{
 					text: "VueRouter",
@@ -348,8 +334,7 @@ export default defineUserConfig({
 						},
 						{
 							text: "第一篇 框架设计概览",
-							link:
-								"Vue.js设计与实现/第一篇框架设计概览",
+							link: "Vue.js设计与实现/第一篇框架设计概览",
 						},
 						{
 							text: "第二篇 响应系统",
@@ -360,12 +345,7 @@ export default defineUserConfig({
 				{
 					text: "其他",
 					collapsible: true,
-					children: [
-						"axios",
-						"vue3-vite-electron",
-						"vuepress",
-						"vue3一些自定义指令",
-					],
+					children: ["axios", "vue3-vite-electron", "vuepress", "vue3一些自定义指令"],
 				},
 			],
 			"/leetcode/": [
@@ -409,6 +389,18 @@ export default defineUserConfig({
 				{
 					text: "Vue",
 					children: ["vue2", "vue3", "vuex"],
+				},
+			],
+			"/react/": [
+				{
+					text: "React",
+					collapsible: true,
+					children: ["react18", "react使用svg"],
+				},
+				{
+					text: "其他",
+					collapsible: true,
+					children: ["craco"],
 				},
 			],
 		},
