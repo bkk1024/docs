@@ -200,6 +200,10 @@ export default defineUserConfig({
 								text: "react使用svg",
 								link: "/react/react使用svg.md",
 							},
+							{
+								text: "react使用lottie",
+								link: "/react/react使用lottie.md",
+							},
 						],
 					},
 					{
@@ -395,7 +399,7 @@ export default defineUserConfig({
 				{
 					text: "React",
 					collapsible: true,
-					children: ["react18", "react使用svg"],
+					children: ["react18", "react使用svg", "react使用lottie"],
 				},
 				{
 					text: "其他",
