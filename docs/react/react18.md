@@ -1012,6 +1012,10 @@ import {useEffect} from "react"
 
 useEffect(() => {
   // 这里编写会产生副作用的代码
+  
+  return () => {
+    // 这个 return 的函数会在组件卸载时执行
+  }
 })
 ```
 
