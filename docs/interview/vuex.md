@@ -19,7 +19,7 @@ vuex 是专为 vue 开发的状态管理模式，它其中的状态存储是响�
    }
    ```
 
-2. `actions`：用来解决**异步流程**改变 state 数据
+2. `actions`：用来解决**异步流程**改变 state 数据，通过提交`mutations`来修改数据
 
    ```js
    export default {
@@ -68,8 +68,53 @@ vuex 是专为 vue 开发的状态管理模式，它其中的状态存储是响�
      }
    }
    ```
+   
+5. `modules`：模块化vuex，将vuex分模块，更好维护
 
 ## 3、actions 和 mutations 的区别
 
 主要的区别在于mutations 只能是同步操作，，action 可以包含异步操作，而且可以通过 action 来提交 mutations。
+
+## 4、vuex在哪些场景下使用
+
+1. 用户的个人信息
+2. 购物车模块
+3. 订单模块
+4. ...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
