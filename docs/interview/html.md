@@ -1,6 +1,8 @@
 # HTML
 
-## 1、H5 新特性
+## 1、H5C3 新特性
+
+H5新特性
 
 1. 新增选择器：`document.querySelector | document.querySelectorAll` 
 2. 媒体播放：video、audio
@@ -12,9 +14,24 @@
 8. canvas
 9. Form Data 对象
 
+C3新特性：
+
+1. 新增选择器：属性选择器、伪类选择器、伪元素选择器
+2. 媒体查询：@media
+3. 文字阴影
+4. 边框
+5. 盒子模型：box-sizing
+6. 渐变
+7. 过渡
+8. 自定义动画
+9. 背景属性
+10. 2D和3D
+
 ## 2、html 语义化
 
-html 语义化即对应的标签做对应的事情，这样可以使页面有良好的结构、能够让代码有更好的阅读体验、方便开发维护、有利于 SEO 和搜索引擎建立良好的沟通。
+html 语义化即对应的标签做对应的事情，这样可以使页面有良好的结构、能够让代码有更好的阅读体验、方便开发维护、有利于 SEO 和搜索引擎建立良好的沟通、让浏览器更好的解析代码。
+
+在写html页面结构时所用的标签是有意义的，如头部使用head，主体用main，底部用foot等。
 
 ## 3、src 和 href 的区别
 
@@ -134,4 +151,47 @@ label 的 for 属性应当与相关元素的 id 属性相同
 3. 发邮件等
 4. 锚点跳转
 5. 下载文件
+
+## 13、移动端兼容问题
+
+1. 设置`overflow: scroll/auto`时，ios上的滑动会卡顿
+   - 解决方案：`-webkit-overflow-scrolling: touch`
+2. 在安卓环境下，`placeholder`文字设置行高时会偏上
+   - 解决方案：input有placeholder时不设置行高
+3. 移动端字体小于12px时异常显示
+   - 解决方案：先将整体放大一倍，然后再使用`transform`进行缩小
+4. ios下input按钮设置了`disabled`属性为true时显示异常
+   - 解决方案：`input[type=button]{opcity:1}`
+5. 安卓手机下取消语音输入按钮
+   - 解决方案：`input::-webkit-input-speech-button{display:none}`
+6. ios下取消input输入框在输入英文首字母默认大写
+   - 解决方案：`<input autocapitalize="off" autocorrect="off" />`
+7. 禁用ios和安卓用户选中文字
+   - 解决方案：`-webkit-user-select: none`
+8. 禁止ios弹出各种窗口
+   - 解决方案：`-webkit-touch-callout: none`
+9. 禁止ios识别长串数字为电话
+   - 解决方案：`<meta conten="telephone=no" name="format-detection" />`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
