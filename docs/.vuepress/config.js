@@ -394,6 +394,18 @@ export default defineUserConfig({
 					text: "Vue",
 					children: ["vue2", "vue3", "vuex"],
 				},
+				{
+					text: "ECharts",
+					link: "echarts",
+				},
+				{
+					text: "uni-app",
+					link: "uni-app",
+				},
+				{
+					text: "Webpack",
+					link: "webpack",
+				},
 			],
 			"/react/": [
 				{
