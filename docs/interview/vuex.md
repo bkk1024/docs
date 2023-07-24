@@ -82,7 +82,15 @@ vuex 是专为 vue 开发的状态管理模式，它其中的状态存储是响�
 3. 订单模块
 4. ...
 
+## 5、vuex的响应式处理
 
+vue2中：
+
+使用vuex时，需要执行`Vue.use(vuex)`，最终会执行到vuex的install方法，通过`applyMixin(vue)`在任意组件内执行`this.$store`就可以访问到store对象。
+
+vuex的state是响应式的，借助的是vue的data，将state存到vue实例组件的data中，就可以实现vuex的state响应式。
+
+最后我们触发事件时，会通过dispatch来访问到actions中的方法，actions中的commit会触发mutations中的方法，从而更改state中的值，因为state被绑定到了vue实例的data中，因此就会触发视图变化。
 
 
 
