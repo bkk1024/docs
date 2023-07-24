@@ -393,6 +393,7 @@ export default defineUserConfig({
 				{
 					text: "Vue",
 					children: ["vue2", "vue3", "vuex"],
+					collapsible: true,
 				},
 				{
 					text: "ECharts",
