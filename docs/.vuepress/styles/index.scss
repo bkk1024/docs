@@ -91,7 +91,8 @@
 	}
 }
 
-$sidebarList: "\e604", "\e60b", "\e60e", "\e613", "\e614", "\e615", "\e616", "\e61a", "\e61b", "\e61d";
+$sidebarList: "\e604", "\e60b", "\e60e", "\e613", "\e614", "\e615", "\e616", "\e61a", "\e61b",
+	"\e61d";
 
 // 侧边栏
 .sidebar-heading {
@@ -109,8 +110,11 @@ $sidebarList: "\e604", "\e60b", "\e60e", "\e613", "\e614", "\e615", "\e616", "\e
 }
 
 .sidebar {
-	background: transparent;
-	backdrop-filter: none;
+	// 屏幕宽度大于541时使用这个
+	@media screen and (min-width: 541px) {
+		background: transparent;
+		backdrop-filter: none;
+	}
 }
 
 // 页面内容
