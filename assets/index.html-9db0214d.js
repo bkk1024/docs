@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-1711fd70","path":"/vue3/Vue.js%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/","title":"Vue.js设计与实现","lang":"zh-CN","frontmatter":{"title":"Vue.js设计与实现","article":false,"feed":false,"sitemap":false},"headers":[],"git":{},"readingTime":{"minutes":0.03,"words":9},"filePathRelative":null,"excerpt":""}');export{e as data};
