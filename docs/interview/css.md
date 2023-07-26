@@ -52,13 +52,13 @@
 
 这个虽然之前用得多，但是有些还是容易一时脑抽就忘记，真见鬼了😒，看来还是记得不牢。
 
-1. static：默认值
-2. initial：设置该属性为默认值
-3. relative：相对定位
-4. absolute：绝对定位
-5. fixed：固定定位
-6. sticky：粘性定位
-7. inherit：规定应该从父元素继承 position 的值
+1. static：默认值，表示没有定位。
+2. initial：设置该属性为默认值。
+3. relative：相对定位，相对于自身定位，不脱离文档流，会占据原先的位置。
+4. absolute：绝对定位，相对于第一个有 relative 的父元素进行定位，脱离文档流，不会占据原先的位置，必须有left、right、top、bottom。
+5. fixed：固定定位，相对于浏览器窗口进行定位。
+6. sticky：粘性定位。
+7. inherit：规定应该从父元素继承 position 的值。
 
 ## 4、px 和 em 的区别
 
@@ -75,6 +75,7 @@ BFC：指的是一个独立的布局环境，其中的元素布局与外部互�
 - 设置浮动：float
 - overflow 设置为 auto、scroll、hidden
 - position 设置为 absolute、fixed
+- display 设置为 inline-block、table-cell、...
 
 应用：
 
@@ -174,20 +175,29 @@ png压缩：
 
 ## 11、清除浮动
 
+- 触发BFC
+
 - clear 清除浮动（添加空 div 法），在浮动元素下方添加空 div，并给该元素赋予以下样式：`{clear: both;height: 0;overflow: hidden;}`
-- 给浮动元素父元素设置高度
-- 父元素同时浮动（父元素的兄弟元素也需要设置浮动）
-- 父元素设置为 inline-block，其 margin: 0 auto 居中方式失效
-- 给父元素添加 overflow: hidden 清除浮动
+
 - 使用 ::after 伪元素清除浮动（主流方法，推荐使用）
+
+  ```css
+  ul::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+  ```
 
 ## 12、盒模型
 
-W3C 盒模型：宽高不包含内边距和边框
+css盒子模型分为标准盒子模型和IE盒子模型。
 
-IE 盒模型：宽高包含内边距和边框
+W3C 盒模型（标准盒子模型）：宽高不包含内边距和边框。
 
-通过 box-sizing: border-box 设置为 IE 盒模型
+IE 盒模型：宽高包含内边距和边框。
+
+通过 box-sizing: border-box 设置为 IE 盒模型，content-box 设置为标准盒子模型。
 
 ## 13、重绘和重排
 
@@ -237,6 +247,11 @@ IE 盒模型：宽高包含内边距和边框
 3. visibility: hidden
 4. 移出页面视口
 
+> `display:none`和`visibility:hidden`的区别：
+>
+> 1. `display:none`不占位置；`visibility:hidden`会占用原先的位置。
+> 2. `display:none`会产生一次回流（重排），然后页面会重绘；`visibility:hidden`不会造成回流，会直接造成重绘。
+
 ## 18、重绘和重排的区别
 
 - 重绘（回流）：布局引擎会根据所有的样式计算出盒模型在页面上的位置和大小。对DOM的样式进行修改，如color、background-color，浏览器不需要重新计算几何属性的时候，直接绘制该元素的新样式，这就是重绘。
@@ -250,10 +265,69 @@ IE 盒模型：宽高包含内边距和边框
 
 ## 19、css那些属性可以继承
 
-1. 字体的一些属性：font
+1. 字体的一些属性：font-size、font-weight、color、line-height
 2. 文本的一些属性：lint-height、color等
 3. 元素可见性：visibility: hidden
 4. 表格布局的属性：border-spacing
 5. 列表属性：list-style
 6. 页面样式属性：page
 7. 声音的样式属性
+
+## 20、line-height和height的区别
+
+- line-height：表示的是盒子中每一行文本的高度
+- height：表示的是盒子的高度
+
+## 21、css选择器
+
+1. 通配符选择器
+2. id选择器
+3. 类选择器
+4. 标签选择器
+5. 相邻选择器（+）
+6. 后代选择器（ul li）
+7. 子元素选择器 （>）
+8. 属性选择器
+9. ...
+
+## 22、opacity和rgba的区别
+
+1. opacity的取值范围为0~1；rgba(红色, 绿色, 蓝色, 透明度)，色值的取值为0~255或者百分比，a的取值范围为0~1。
+2. opacity会造成整个盒子透明，包括其中的内容；rgba只会造成该元素的颜色的透明，不会造成内容的透明。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
